@@ -2,10 +2,27 @@
 namespace AppBundle\Service;
 
 use AppBundle\Dto\NewRideDto;
+use AppBundle\Entity\Ride;
+use AppBundle\Repository\RideRepositoryInterface;
 
 class DrafterService
 {
-    public function addRide(NewRideDto $newRideDto) : bool {
+    /**
+     * @var RideRepositoryInterface
+     */
+    private $rideRepository;
+
+    public function __construct(RideRepositoryInterface $rideRepository)
+    {
+        $this->rideRepository = $rideRepository;
+    }
+
+    public function addRide(NewRideDto $newRideDto) : bool
+    {
+        $ride = new Ride($newRideDto->user, $newRideDto->rideLocation, $newRideDto->rideBeginning);
+        if (!$this->rideRepository->add($ride)) {
+            return false;
+        }
         return true;
     }
 }
