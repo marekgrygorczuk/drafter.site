@@ -36,6 +36,13 @@ class MemoryRideRepository implements RideRepositoryInterface
 
     public function get($rideId)
     {
-        return $this->rides[$rideId];
+        if (isset($this->rides[$rideId])) return $this->rides[$rideId];
+        return null;
+    }
+
+    public function remove($getId)
+    {
+        unset($this->rides[$getId]);
+        return true;
     }
 }

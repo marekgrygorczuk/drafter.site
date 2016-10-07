@@ -23,4 +23,18 @@ class MemoryRideRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($expectedRide, $repository->get($expectedRide->getId()));
     }
+
+    public function testRepositoryWillRemoveGivenObjectByGivenId()
+    {
+        $expectedRide = new Ride(new User(), "warsaw", new \DateTime());
+
+        $repository = new MemoryRideRepository();
+        $repository->add($expectedRide);
+
+        $this->assertSame($expectedRide, $repository->get($expectedRide->getId()));
+
+        $repository->remove($expectedRide->getId());
+        $this->assertNull($repository->get($expectedRide->getId()));
+    }
+
 }
