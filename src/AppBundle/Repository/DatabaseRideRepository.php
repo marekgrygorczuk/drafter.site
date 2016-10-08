@@ -39,7 +39,7 @@ class DatabaseRideRepository implements RideRepositoryInterface
 
     public function findAll() : array
     {
-        $this->rideRepository->findAll();
+        return $this->rideRepository->findAll();
     }
 
     public function remove(int $rideId) : bool
