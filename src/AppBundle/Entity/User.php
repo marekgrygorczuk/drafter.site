@@ -20,4 +20,18 @@ class User
     {
         return $this->id;
     }
+
+    /**
+     * Set id
+     *
+     * @param integer $id
+     *
+     * @return User
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 }

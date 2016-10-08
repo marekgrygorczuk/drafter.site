@@ -11,8 +11,7 @@ AppBundle\Entity\Ride:
             length: 100
         beginning:
             type: datetime
-        description:
-            type: text
+
     manyToOne:
         owner:
             targetEntity: AppBundle\Entity\User
