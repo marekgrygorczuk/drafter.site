@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Service\DrafterService;
 use AppBundle\Dto\NewRideDto;
 use AppBundle\Entity\User;
-use AppBundle\Repository\DatabaseRideRepository;
 use AppBundle\Repository\MemoryRideRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -26,8 +25,7 @@ class DefaultController extends Controller
 
     /**
      * @Route("/", name="homepage")
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function indexAction()
     {
