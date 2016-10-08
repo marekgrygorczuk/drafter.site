@@ -57,4 +57,8 @@ class MemoryRideRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->repository->removeAll();
         $this->assertEquals(0, count($this->repository->findAll()));
     }
+    public function tearDown()
+    {
+        $this->repository->removeAll();
+    }
 }

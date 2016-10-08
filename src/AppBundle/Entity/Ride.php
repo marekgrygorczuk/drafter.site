@@ -14,17 +14,17 @@ class Ride
     /**
      * @var User
      */
-    private $user;
+    private $owner;
     /**
      * @var int
      */
     private $id;
 
-    public function __construct(User $user, string $location, \DateTime $beginning)
+    public function __construct(User $owner, string $location, \DateTime $beginning)
     {
         $this->location = $location;
         $this->beginning = $beginning;
-        $this->user = $user;
+        $this->owner = $owner;
         $this->id = mt_rand();
     }
 
