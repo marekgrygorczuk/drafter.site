@@ -13,8 +13,8 @@ class MemoryRideRepositoryTest extends \PHPUnit_Framework_TestCase
     private $repository;
 
     public function setUp() {
-//        $this->repository = new MemoryRideRepository();
-        $this->repository = new DatabaseRideRepository();
+        $this->repository = new MemoryRideRepository();
+//        $this->repository = new DatabaseRideRepository();
     }
     public function testRepositoryWillSavePersistedObject()
     {
