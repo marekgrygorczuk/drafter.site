@@ -37,4 +37,15 @@ class MemoryRideRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($repository->get($expectedRide->getId()));
     }
 
+    public function testRepositoryWillReturnAllSavedRides()
+    {
+        $ride1 = new Ride(new User(), "warsaw", new \DateTime());
+        $ride2 = new Ride(new User(), "warsaw", new \DateTime());
+
+        $repository = new MemoryRideRepository();
+        $repository->add($ride1);
+        $repository->add($ride2);
+
+        $this->assertEquals(2, count($repository->findAll()));
+    }
 }

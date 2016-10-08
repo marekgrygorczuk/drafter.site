@@ -49,4 +49,16 @@ class DrafterServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($drafterService->addRide($dto));
     }
+    public function testServiceWillListAllRides() {
+        $repositoryMock = $this->getMockBuilder('AppBundle\Repository\RideRepositoryInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $repositoryMock->expects($this->once())
+            ->method('findAll')
+            ->will($this->returnValue([]));
+
+        $drafterService = new DrafterService($repositoryMock);
+        $this->assertEquals([], $drafterService->AllRides());
+    }
 }

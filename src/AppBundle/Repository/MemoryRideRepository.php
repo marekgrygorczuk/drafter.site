@@ -45,4 +45,10 @@ class MemoryRideRepository implements RideRepositoryInterface
         unset($this->rides[$getId]);
         return true;
     }
+
+    public function findAll() : array
+    {
+
+        return $this->rides;
+    }
 }

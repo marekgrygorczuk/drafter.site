@@ -7,4 +7,5 @@ interface RideRepositoryInterface
 {
     public function add(Ride $ride) : bool;
     public function find(array $searchArguments) : array;
+    public function findAll() : array;
 }

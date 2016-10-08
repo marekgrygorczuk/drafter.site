@@ -3,6 +3,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Dto\NewRideDto;
 use AppBundle\Entity\Ride;
+use AppBundle\Repository\MemoryRideRepository;
 use AppBundle\Repository\RideRepositoryInterface;
 
 class DrafterService
@@ -24,5 +25,10 @@ class DrafterService
             return false;
         }
         return true;
+    }
+
+    public function AllRides() : array
+    {
+        return $this->rideRepository->findAll();
     }
 }
