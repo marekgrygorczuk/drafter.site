@@ -14,27 +14,32 @@ use AppBundle\Entity\User;
 
 class MemoryRideRepositoryTest extends \PHPUnit_Framework_TestCase
 {
+
+    /** @var  MemoryRideRepository */
+    private $repository;
+
+    public function setUp() {
+        $this->repository = new MemoryRideRepository();
+    }
     public function testRepositoryWillSavePersistedObject()
     {
         $expectedRide = new Ride(new User(), "warsaw", new \DateTime());
 
-        $repository = new MemoryRideRepository();
-        $repository->add($expectedRide);
+        $this->repository->add($expectedRide);
 
-        $this->assertSame($expectedRide, $repository->get($expectedRide->getId()));
+        $this->assertSame($expectedRide, $this->repository->get($expectedRide->getId()));
     }
 
     public function testRepositoryWillRemoveGivenObjectByGivenId()
     {
         $expectedRide = new Ride(new User(), "warsaw", new \DateTime());
 
-        $repository = new MemoryRideRepository();
-        $repository->add($expectedRide);
+        $this->repository->add($expectedRide);
 
-        $this->assertSame($expectedRide, $repository->get($expectedRide->getId()));
+        $this->assertSame($expectedRide, $this->repository->get($expectedRide->getId()));
 
-        $repository->remove($expectedRide->getId());
-        $this->assertNull($repository->get($expectedRide->getId()));
+        $this->repository->remove($expectedRide->getId());
+        $this->assertNull($this->repository->get($expectedRide->getId()));
     }
 
     public function testRepositoryWillReturnAllSavedRides()
@@ -42,10 +47,9 @@ class MemoryRideRepositoryTest extends \PHPUnit_Framework_TestCase
         $ride1 = new Ride(new User(), "warsaw", new \DateTime());
         $ride2 = new Ride(new User(), "warsaw", new \DateTime());
 
-        $repository = new MemoryRideRepository();
-        $repository->add($ride1);
-        $repository->add($ride2);
+        $this->repository->add($ride1);
+        $this->repository->add($ride2);
 
-        $this->assertEquals(2, count($repository->findAll()));
+        $this->assertEquals(2, count($this->repository->findAll()));
     }
 }
