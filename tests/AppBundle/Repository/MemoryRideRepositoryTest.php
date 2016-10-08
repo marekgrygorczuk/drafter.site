@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mocniak
- * Date: 07.10.16
- * Time: 23:47
- */
 
 namespace AppBundle\Repository;
 
@@ -39,7 +33,7 @@ class MemoryRideRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedRide, $this->repository->get($expectedRide->getId()));
 
         $this->repository->remove($expectedRide->getId());
-        $this->assertNull($this->repository->get($expectedRide->getId()));
+        $this->assertEquals(0, count($this->repository->findAll()));
     }
 
     public function testRepositoryWillReturnAllSavedRides()
@@ -51,5 +45,16 @@ class MemoryRideRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->repository->add($ride2);
 
         $this->assertEquals(2, count($this->repository->findAll()));
+    }
+    public function testRepositoryCanRemoveAllSavedRides() {
+        $ride1 = new Ride(new User(), "warsaw", new \DateTime());
+        $ride2 = new Ride(new User(), "warsaw", new \DateTime());
+
+        $this->repository->add($ride1);
+        $this->repository->add($ride2);
+
+        $this->assertEquals(2, count($this->repository->findAll()));
+        $this->repository->removeAll();
+        $this->assertEquals(0, count($this->repository->findAll()));
     }
 }

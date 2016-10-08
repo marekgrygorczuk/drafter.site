@@ -1,15 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mocniak
- * Date: 07.10.16
- * Time: 23:45
- */
 
 namespace AppBundle\Repository;
 
 
 use AppBundle\Entity\Ride;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class MemoryRideRepository implements RideRepositoryInterface
 {
@@ -34,13 +29,13 @@ class MemoryRideRepository implements RideRepositoryInterface
         // TODO: Implement find() method.
     }
 
-    public function get($rideId)
+    public function get(int $rideId) : Ride
     {
         if (isset($this->rides[$rideId])) return $this->rides[$rideId];
-        return null;
+        throw new \Exception("Ride with id ".$rideId." not found.");
     }
 
-    public function remove($getId)
+    public function remove(int $getId) : bool
     {
         unset($this->rides[$getId]);
         return true;
@@ -48,7 +43,12 @@ class MemoryRideRepository implements RideRepositoryInterface
 
     public function findAll() : array
     {
-
         return $this->rides;
+    }
+
+    public function removeAll() : bool
+    {
+        $this->rides = [];
+        return true;
     }
 }
