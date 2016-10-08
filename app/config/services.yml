@@ -4,6 +4,10 @@ parameters:
 #    parameter_name: value
 
 services:
+    default_controller:
+        class: AppBundle\Controller\DefaultController
+        arguments: ["@drafter_service"]
+
     drafter_service:
         class: AppBundle\Service\DrafterService
         arguments: ["@database_ride_repository"]

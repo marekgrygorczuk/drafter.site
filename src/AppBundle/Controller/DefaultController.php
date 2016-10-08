@@ -2,12 +2,23 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Service\DrafterService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
+    /**
+     * @var DrafterService
+     */
+    private $drafterService;
+
+    public function __construct(DrafterService $drafterService)
+    {
+        $this->drafterService = $drafterService;
+    }
+
     /**
      * @Route("/", name="homepage")
      * @param Request $request
