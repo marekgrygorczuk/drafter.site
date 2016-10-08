@@ -5,6 +5,7 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Ride;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 class DatabaseRideRepository implements RideRepositoryInterface
 {
@@ -12,10 +13,16 @@ class DatabaseRideRepository implements RideRepositoryInterface
      * @var EntityManager
      */
     private $entityManager;
+    /**
+     * @var EntityRepository
+     */
+    private $rideRepository;
 
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
+        $this->rideRepository = $this->entityManager->getRepository('AppBundle:Ride');
+
     }
 
     public function add(Ride $ride) : bool
@@ -32,21 +39,24 @@ class DatabaseRideRepository implements RideRepositoryInterface
 
     public function findAll() : array
     {
-        // TODO: Implement findAll() method.
+        $this->rideRepository->findAll();
     }
 
     public function remove(int $rideId) : bool
     {
-        // TODO: Implement remove() method.
+        $rideToDelete = $this->get($rideId);
+        $this->entityManager->remove($rideToDelete);
+        return true;
     }
 
     public function get(int $rideId) : Ride
     {
-        // TODO: Implement get() method.
+        return $this->rideRepository->find($rideId);
     }
 
     public function removeAll() : bool
     {
-        // TODO: Implement removeAll() method.
+        $this->entityManager->createQuery('DELETE FROM AppBundle:Ride')->execute();
+        return true;
     }
 }
