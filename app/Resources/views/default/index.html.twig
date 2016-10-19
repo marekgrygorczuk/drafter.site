@@ -2,13 +2,12 @@
 
 {% block body %}
     <div id="wrapper" xmlns="http://www.w3.org/1999/html">
-        dupa
-        {#{% for ride in rides %}#}
-            {#{{ ride.location }}#}
-            {#{{ ride.beginning }}#}
-            {#{{ ride.owner }}#}
-            {#{{ ride.id }}#}
-        {#{% endfor %}#}
+        {% for ride in rides %}
+            {{ ride.location }}<br>
+            {{ ride.beginning|date("d.m.Y") }}<br>
+            owner id: {{ ride.owner.id }}<br>
+            ride id: {{ ride.id }}
+        {% endfor %}
     </div>
 {% endblock %}
 

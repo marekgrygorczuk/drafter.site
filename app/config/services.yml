@@ -6,7 +6,7 @@ parameters:
 services:
     default_controller:
         class: AppBundle\Controller\DefaultController
-        arguments: ["@drafter_service"]
+        arguments: ["@drafter_service", '@templating']
 
     drafter_service:
         class: AppBundle\Service\DrafterService

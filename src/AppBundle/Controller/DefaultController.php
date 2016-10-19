@@ -6,10 +6,9 @@ use AppBundle\Service\DrafterService;
 use AppBundle\Dto\NewRideDto;
 use AppBundle\Entity\User;
 use AppBundle\Repository\MemoryRideRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Templating\EngineInterface;
 
 class DefaultController extends Controller
 {
@@ -17,10 +16,20 @@ class DefaultController extends Controller
      * @var DrafterService
      */
     private $drafterService;
+    /**
+     * @var EngineInterface
+     */
+    private $templating;
 
-    public function __construct(DrafterService $drafterService)
+    /**
+     * DefaultController constructor.
+     * @param DrafterService $drafterService
+     * @param EngineInterface $templating
+     */
+    public function __construct(DrafterService $drafterService, EngineInterface $templating)
     {
         $this->drafterService = $drafterService;
+        $this->templating = $templating;
     }
 
     /**
@@ -36,8 +45,8 @@ class DefaultController extends Controller
         $this->drafterService->addRide($dto);
 
         $allRides = $this->drafterService->AllRides();
-        var_dump($allRides);
-        return $this->render('default/index.html.twig', [
+//        var_dump($allRides);
+        return $this->templating->renderResponse('default/index.html.twig', [
             'rides' => $allRides,
             ]
         );
