@@ -6,19 +6,19 @@ class Ride
     /**
      * @var string
      */
-    private $location;
+    public $location;
     /**
      * @var \DateTime
      */
-    private $beginning;
+    public $beginning;
     /**
      * @var User
      */
-    private $owner;
+    public $owner;
     /**
      * @var int
      */
-    private $id;
+    public $id;
 
     public function __construct(User $owner, string $location, \DateTime $beginning)
     {

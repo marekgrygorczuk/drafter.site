@@ -33,23 +33,13 @@ class DefaultController extends Controller
         $dto->rideLocation = 'warszawa';
         $dto->rideBeginning = new \DateTime();
 
-        $drafterService = new DrafterService(new MemoryRideRepository());
-        $drafterService->addRide($dto);
+        $this->drafterService->addRide($dto);
 
-        $allRides = json_encode($drafterService->AllRides());
-
-
-        return new Response(
-            '<html><body>
-            <h1>Drafter</h1>
-            <p>'.$allRides.'</p>
-            </body></html>'
-
+        $allRides = $this->drafterService->AllRides();
+        var_dump($allRides);
+        return $this->render('default/index.html.twig', [
+            'rides' => $allRides,
+            ]
         );
-
-
-//        return $this->render('default/index.html.twig', [
-//            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-//        ]);
     }
 }
