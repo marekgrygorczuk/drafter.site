@@ -46,6 +46,7 @@ class DatabaseRideRepository implements RideRepositoryInterface
     {
         $rideToDelete = $this->get($rideId);
         $this->entityManager->remove($rideToDelete);
+        $this->entityManager->flush();
         return true;
     }
 
@@ -57,6 +58,7 @@ class DatabaseRideRepository implements RideRepositoryInterface
     public function removeAll() : bool
     {
         $this->entityManager->createQuery('DELETE FROM AppBundle:Ride')->execute();
+        $this->entityManager->flush();
         return true;
     }
 }

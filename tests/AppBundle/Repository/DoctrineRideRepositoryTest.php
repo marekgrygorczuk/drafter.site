@@ -5,18 +5,31 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\User;
-use Doctrine\ORM\EntityManager;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class MemoryRideRepositoryTest extends \PHPUnit_Framework_TestCase
+class DoctrineRideRepositoryTest extends KernelTestCase
 {
 
-    /** @var  MemoryRideRepository */
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    private $em;
+
+    /** @var  DatabaseRideRepository */
     private $repository;
 
-    public function setUp() {
-        $this->repository = new MemoryRideRepository();
-//        $this->repository = new DatabaseRideRepository();
+    /**
+     * {@inheritDoc}
+     */
+    protected function setUp()
+    {
+        self::bootKernel();
+        $this->em = static::$kernel->getContainer()
+            ->get('doctrine')
+            ->getManager();
+        $this->repository = new DatabaseRideRepository($this->em);
     }
+
     public function testRepositoryWillSavePersistedObject()
     {
         $expectedRide = new Ride(new User(), "warsaw", new \DateTime());
@@ -48,7 +61,9 @@ class MemoryRideRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(2, count($this->repository->findAll()));
     }
-    public function testRepositoryCanRemoveAllSavedRides() {
+
+    public function testRepositoryCanRemoveAllSavedRides()
+    {
         $ride1 = new Ride(new User(), "warsaw", new \DateTime());
         $ride2 = new Ride(new User(), "warsaw", new \DateTime());
 
@@ -59,6 +74,7 @@ class MemoryRideRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->repository->removeAll();
         $this->assertEquals(0, count($this->repository->findAll()));
     }
+
     public function tearDown()
     {
         $this->repository->removeAll();
