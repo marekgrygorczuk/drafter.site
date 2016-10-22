@@ -4,6 +4,14 @@ namespace AppBundle\Entity;
 class Ride
 {
     /**
+     * @var int
+     */
+    public $id;
+    /**
+     * @var string
+     */
+    public $name;
+    /**
      * @var string
      */
     public $location;
@@ -15,10 +23,6 @@ class Ride
      * @var User
      */
     public $owner;
-    /**
-     * @var int
-     */
-    public $id;
 
     public function __construct(User $owner, string $location, \DateTime $beginning)
     {

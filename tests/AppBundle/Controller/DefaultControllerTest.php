@@ -15,4 +15,12 @@ class DefaultControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Drafter', $crawler->filter('h1')->text());
     }
+
+    public function testAddRide() {
+        $client = static::createClient();
+
+        $crawler = $client->request('GET', '/addRide');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
 }

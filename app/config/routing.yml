@@ -2,3 +2,7 @@
 mainpage:
     path:     /
     defaults: { _controller: default_controller:indexAction }
+
+addRide:
+    path:     /addRide
+    defaults: { _controller: default_controller:addRideAction }
