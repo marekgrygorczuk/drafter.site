@@ -8,6 +8,7 @@ use AppBundle\Dto\NewRideDto;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\EngineInterface;
 
@@ -57,9 +58,20 @@ class DefaultController extends Controller
             ]
         );
     }
-    public function addRideAction() {
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function addRideAction(Request $request) {
         $rideDto = new NewRideDto();
         $form = $this->formFactory->create(NewRideDtoType::class, $rideDto);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->drafterService->addRide($rideDto);
+        }
         return $this->templating->renderResponse('default/addRide.html.twig', [
                 'form' => $form->createView()
             ]

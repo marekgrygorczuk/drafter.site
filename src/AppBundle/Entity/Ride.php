@@ -19,16 +19,16 @@ class Ride
      * @var \DateTime
      */
     public $beginning;
-    /**
-     * @var User
-     */
-    public $owner;
+//    /**
+//     * @var User
+//     */
+//    public $owner;
 
-    public function __construct(User $owner, string $location, \DateTime $beginning)
+    public function __construct(string $location, \DateTime $beginning, $name)
     {
         $this->location = $location;
         $this->beginning = $beginning;
-        $this->owner = $owner;
+        $this->name = $name;
         $this->id = mt_rand();
     }
 
@@ -102,27 +102,27 @@ class Ride
         return $this->beginning;
     }
 
-    /**
-     * Set owner
-     *
-     * @param \AppBundle\Entity\User $owner
-     *
-     * @return Ride
-     */
-    public function setOwner(\AppBundle\Entity\User $owner = null)
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
-
-    /**
-     * Get owner
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getOwner()
-    {
-        return $this->owner;
-    }
+//    /**
+//     * Set owner
+//     *
+//     * @param \AppBundle\Entity\User $owner
+//     *
+//     * @return Ride
+//     */
+//    public function setOwner(\AppBundle\Entity\User $owner = null)
+//    {
+//        $this->owner = $owner;
+//
+//        return $this;
+//    }
+//
+//    /**
+//     * Get owner
+//     *
+//     * @return \AppBundle\Entity\User
+//     */
+//    public function getOwner()
+//    {
+//        return $this->owner;
+//    }
 }

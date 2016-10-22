@@ -6,15 +6,19 @@ AppBundle\Entity\Ride:
         id:
             type: integer
     fields:
+        name:
+            type: string
+            length: 100
         location:
             type: string
             length: 100
         beginning:
             type: datetime
 
-    manyToOne:
-        owner:
-            targetEntity: AppBundle\Entity\User
-            mappedBy: ownerId
-            cascade:
-                - persist
+#    manyToOne:
+#        owner:
+#            nullable: true
+#            targetEntity: AppBundle\Entity\User
+#            mappedBy: ownerId
+#            cascade:
+#                - persist

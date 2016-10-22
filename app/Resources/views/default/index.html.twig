@@ -6,7 +6,7 @@
         {% for ride in rides %}
             {{ ride.location }}<br>
             {{ ride.beginning|date("d.m.Y") }}<br>
-            owner id: {{ ride.owner.id }}<br>
+            {#owner id: {{ ride.owner.id }}<br>#}
             ride id: {{ ride.id }}
         {% endfor %}
     </div>

@@ -3,7 +3,6 @@ namespace AppBundle\Service;
 
 use AppBundle\Dto\NewRideDto;
 use AppBundle\Entity\Ride;
-use AppBundle\Repository\MemoryRideRepository;
 use AppBundle\Repository\RideRepositoryInterface;
 
 class DrafterService
@@ -20,7 +19,7 @@ class DrafterService
 
     public function addRide(NewRideDto $newRideDto) : bool
     {
-        $ride = new Ride($newRideDto->user, $newRideDto->rideLocation, $newRideDto->rideBeginning);
+        $ride = new Ride($newRideDto->rideLocation, $newRideDto->rideBeginning, $newRideDto->name);
         if (!$this->rideRepository->add($ride)) {
             return false;
         }
