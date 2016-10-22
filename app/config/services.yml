@@ -11,6 +11,7 @@ services:
     drafter_service:
         class: AppBundle\Service\DrafterService
         arguments: ["@database_ride_repository"]
+
     database_ride_repository:
         class: AppBundle\Repository\DatabaseRideRepository
         arguments: ["@doctrine.orm.default_entity_manager"]

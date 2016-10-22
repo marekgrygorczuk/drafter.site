@@ -32,6 +32,3 @@ monolog:
 
 #swiftmailer:
 #    delivery_address: me@example.com
-services:
-    database_ride_repository:
-        class: AppBundle\Repository\MemoryRideRepository

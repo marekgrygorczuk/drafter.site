@@ -45,13 +45,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $dto = new NewRideDto();
-        $dto->user = new User();
-        $dto->rideLocation = 'warszawa';
-        $dto->rideBeginning = new \DateTime();
-
-        $this->drafterService->addRide($dto);
-
         $allRides = $this->drafterService->AllRides();
         return $this->templating->renderResponse('default/index.html.twig', [
             'rides' => $allRides,

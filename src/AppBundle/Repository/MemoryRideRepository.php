@@ -20,6 +20,7 @@ class MemoryRideRepository implements RideRepositoryInterface
 
     public function add(Ride $ride) : bool
     {
+        var_dump('add ride in memory repository');
         $this->rides[$ride->getId()] = $ride;
         return true;
     }
