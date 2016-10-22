@@ -20,14 +20,6 @@ class RideStampTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $rideStamp->doesItHappenOn($date));
     }
 
-    public function testRideStampProvidesDataNecessaryToCreateNewRide()
-    {
-        $newRideDto = new NewRideDto();
-        $rideStamp = new RideStamp();
-        $rideStamp->setNewRideDto($newRideDto);
-        $this->assertSame($newRideDto, $rideStamp->getNewRideDto());
-    }
-
     public function dates()
     {
         return [

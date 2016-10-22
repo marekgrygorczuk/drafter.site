@@ -27,7 +27,6 @@ class DatabaseRideRepository implements RideRepositoryInterface
 
     public function add(Ride $ride) : bool
     {
-        var_dump('add ride in doctrine repository');
         $this->entityManager->persist($ride);
         $this->entityManager->flush();
         return true;

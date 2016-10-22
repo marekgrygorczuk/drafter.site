@@ -16,8 +16,12 @@ class DatabaseRideStampRepositoryTest extends KernelTestCase
      */
     private $em;
 
-    /** @var  DatabaseRideRepository */
+    /** @var  DatabaseRideStampRepository */
     private $repository;
+    /** @var  RideStamp */
+    private $rideStamp1;
+    /** @var  RideStamp */
+    private $rideStamp2;
 
     /**
      * {@inheritDoc}
@@ -29,48 +33,49 @@ class DatabaseRideStampRepositoryTest extends KernelTestCase
             ->get('doctrine')
             ->getManager();
         $this->repository = new DatabaseRideStampRepository($this->em);
+        $this->rideStamp1 = new RideStamp();
+        $this->rideStamp1->rideName = 'Masa';
+        $this->rideStamp1->rideClockHour = 17;
+        $this->rideStamp1->rideClockMinute = 30;
+        $this->rideStamp1->rideLocation = 'Warsaw';
+        $this->rideStamp1->setDayOfWeekOccurrence(RideStamp::FRIDAY);
+        $this->rideStamp2 = new RideStamp();
+        $this->rideStamp2->rideName = 'Babka';
+        $this->rideStamp2->rideClockHour = 9;
+        $this->rideStamp2->rideClockMinute = 00;
+        $this->rideStamp2->rideLocation = 'Warsaw';
+        $this->rideStamp2->setDayOfWeekOccurrence(RideStamp::SATURDAY);
     }
 
     public function testRepositoryWillSavePersistedObject()
     {
-        $expectedRideStamp = new RideStamp();
-        $expectedRideStamp->setDayOfWeekOccurrence(RideStamp::MONDAY);
+        $this->repository->add($this->rideStamp1);
 
-        $this->repository->add($expectedRideStamp);
-
-        $this->assertSame($expectedRideStamp, $this->repository->get($expectedRideStamp->getId()));
+        $this->assertSame($this->rideStamp1, $this->repository->get($this->rideStamp1->getId()));
     }
 
     public function testRepositoryWillRemoveGivenObjectByGivenId()
     {
-        $expectedRide = new Ride("warsaw", new \DateTime(),'test name');
+        $this->repository->add($this->rideStamp1);
 
-        $this->repository->add($expectedRide);
+        $this->assertSame($this->rideStamp1, $this->repository->get($this->rideStamp1->getId()));
 
-        $this->assertSame($expectedRide, $this->repository->get($expectedRide->getId()));
-
-        $this->repository->remove($expectedRide->getId());
+        $this->repository->remove($this->rideStamp1->getId());
         $this->assertEquals(0, count($this->repository->findAll()));
     }
 
     public function testRepositoryWillReturnAllSavedRides()
     {
-        $ride1 = new Ride("warsaw", new \DateTime(), 'test name2');
-        $ride2 = new Ride("warsaw", new \DateTime(), 'test name2');
-
-        $this->repository->add($ride1);
-        $this->repository->add($ride2);
+        $this->repository->add($this->rideStamp1);
+        $this->repository->add($this->rideStamp2);
 
         $this->assertEquals(2, count($this->repository->findAll()));
     }
 
     public function testRepositoryCanRemoveAllSavedRides()
     {
-        $ride1 = new Ride("warsaw", new \DateTime(), 'test name2');
-        $ride2 = new Ride("warsaw", new \DateTime(), 'test name2');
-
-        $this->repository->add($ride1);
-        $this->repository->add($ride2);
+        $this->repository->add($this->rideStamp1);
+        $this->repository->add($this->rideStamp2);
 
         $this->assertEquals(2, count($this->repository->findAll()));
         $this->repository->removeAll();

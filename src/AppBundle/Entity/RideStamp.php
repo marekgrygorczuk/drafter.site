@@ -3,8 +3,6 @@
 namespace AppBundle\Entity;
 
 
-use AppBundle\Dto\NewRideDto;
-
 class RideStamp
 {
     // day of week as in ISO-8601
@@ -26,10 +24,21 @@ class RideStamp
     private $id;
 
     /**
-     * @var NewRideDto
+     * @var string
      */
-    private $newRideDto;
-
+    public $rideName;
+    /**
+     * @var string
+     */
+    public $rideLocation;
+    /**
+     * @var int
+     */
+    public $rideClockHour;
+    /**
+     * @var int
+     */
+    public $rideClockMinute;
     /**
      * RideStamp constructor.
      */
@@ -63,21 +72,4 @@ class RideStamp
     {
         return $this->id;
     }
-
-    /**
-     * @return NewRideDto
-     */
-    public function getNewRideDto()
-    {
-        return $this->newRideDto;
-    }
-
-    /**
-     * @param NewRideDto $newRideDto
-     */
-    public function setNewRideDto($newRideDto)
-    {
-        $this->newRideDto = $newRideDto;
-    }
-
 }

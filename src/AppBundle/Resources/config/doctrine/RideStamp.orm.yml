@@ -1,24 +1,20 @@
-# src/AppBundle/Resources/config/doctrine/Ride.orm.yml
-AppBundle\Entity\Ride:
+# src/AppBundle/Resources/config/doctrine/RideStamp.orm.yml
+AppBundle\Entity\RideStamp:
     type: entity
-    table: ride
+    table: ridestamp
     id:
         id:
             type: integer
     fields:
-        name:
+        dayOfWeek:
+            type: integer
+        rideName:
             type: string
             length: 100
-        location:
+        rideLocation:
             type: string
             length: 100
-        beginning:
-            type: datetime
-
-#    manyToOne:
-#        owner:
-#            nullable: true
-#            targetEntity: AppBundle\Entity\User
-#            mappedBy: ownerId
-#            cascade:
-#                - persist
+        rideClockHour:
+            type: integer
+        rideClockMinute:
+            type: integer
