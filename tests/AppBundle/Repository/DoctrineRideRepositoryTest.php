@@ -32,7 +32,7 @@ class DoctrineRideRepositoryTest extends KernelTestCase
 
     public function testRepositoryWillSavePersistedObject()
     {
-        $expectedRide = new Ride(new User(), "warsaw", new \DateTime());
+        $expectedRide = new Ride("warsaw", new \DateTime(), 'test name');
 
         $this->repository->add($expectedRide);
 
@@ -41,7 +41,7 @@ class DoctrineRideRepositoryTest extends KernelTestCase
 
     public function testRepositoryWillRemoveGivenObjectByGivenId()
     {
-        $expectedRide = new Ride(new User(), "warsaw", new \DateTime());
+        $expectedRide = new Ride("warsaw", new \DateTime(),'test name');
 
         $this->repository->add($expectedRide);
 
@@ -53,8 +53,8 @@ class DoctrineRideRepositoryTest extends KernelTestCase
 
     public function testRepositoryWillReturnAllSavedRides()
     {
-        $ride1 = new Ride(new User(), "warsaw", new \DateTime());
-        $ride2 = new Ride(new User(), "warsaw", new \DateTime());
+        $ride1 = new Ride("warsaw", new \DateTime(), 'test name2');
+        $ride2 = new Ride("warsaw", new \DateTime(), 'test name2');
 
         $this->repository->add($ride1);
         $this->repository->add($ride2);
@@ -64,8 +64,8 @@ class DoctrineRideRepositoryTest extends KernelTestCase
 
     public function testRepositoryCanRemoveAllSavedRides()
     {
-        $ride1 = new Ride(new User(), "warsaw", new \DateTime());
-        $ride2 = new Ride(new User(), "warsaw", new \DateTime());
+        $ride1 = new Ride("warsaw", new \DateTime(), 'test name2');
+        $ride2 = new Ride("warsaw", new \DateTime(), 'test name2');
 
         $this->repository->add($ride1);
         $this->repository->add($ride2);
