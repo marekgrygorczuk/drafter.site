@@ -24,7 +24,7 @@ class Ride
 //     */
 //    public $owner;
 
-    public function __construct(string $location, \DateTime $beginning, $name)
+    public function __construct($location, \DateTime $beginning, $name)
     {
         $this->location = $location;
         $this->beginning = $beginning;
