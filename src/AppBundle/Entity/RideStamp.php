@@ -45,7 +45,7 @@ class RideStamp
      */
     public function setDayOfWeekOccurrence(int $dayOfWeek)
     {
-        if (($dayOfWeek < 0) OR ($dayOfWeek > 7)) throw new \Exception('Invalid day of week. Should be in 1-7 range');
+        if (($dayOfWeek < 1) OR ($dayOfWeek > 7)) throw new \Exception('Invalid day of week. Should be in 1-7 range');
         $this->dayOfWeek = $dayOfWeek;
         return true;
     }
@@ -70,6 +70,14 @@ class RideStamp
     public function getNewRideDto()
     {
         return $this->newRideDto;
+    }
+
+    /**
+     * @param NewRideDto $newRideDto
+     */
+    public function setNewRideDto($newRideDto)
+    {
+        $this->newRideDto = $newRideDto;
     }
 
 }

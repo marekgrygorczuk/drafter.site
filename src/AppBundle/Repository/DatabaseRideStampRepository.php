@@ -7,7 +7,7 @@ use AppBundle\Entity\RideStamp;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
-class DatabaserideStampRepository implements rideStampRepositoryInterface
+class DatabaseRideStampRepository implements RideStampRepositoryInterface
 {
     /**
      * @var EntityManager

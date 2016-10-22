@@ -2,6 +2,7 @@
 
 namespace tests\AppBundle\Entity;
 
+use AppBundle\Dto\NewRideDto;
 use AppBundle\Entity\RideStamp;
 
 class RideStampTest extends \PHPUnit_Framework_TestCase
@@ -19,6 +20,14 @@ class RideStampTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $rideStamp->doesItHappenOn($date));
     }
 
+    public function testRideStampProvidesDataNecessaryToCreateNewRide()
+    {
+        $newRideDto = new NewRideDto();
+        $rideStamp = new RideStamp();
+        $rideStamp->setNewRideDto($newRideDto);
+        $this->assertSame($newRideDto, $rideStamp->getNewRideDto());
+    }
+
     public function dates()
     {
         return [
@@ -28,7 +37,9 @@ class RideStampTest extends \PHPUnit_Framework_TestCase
             [new \DateTime('2016-10-23'), RideStamp::SUNDAY, true],
         ];
     }
-    public function testRideHasNewIdDuringCreation() {
+
+    public function testRideHasNewIdDuringCreation()
+    {
         $rideStamp = new RideStamp();
         $this->assertNotNull($rideStamp->getId());
     }
