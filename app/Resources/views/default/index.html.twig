@@ -4,6 +4,7 @@
     <h1>Drafter</h1>
     <div id="wrapper" xmlns="http://www.w3.org/1999/html">
         {% for ride in rides %}
+            <h2>{{ ride.name }}</h2>
             {{ ride.location }}<br>
             {{ ride.beginning|date("d.m.Y") }}<br>
             {#owner id: {{ ride.owner.id }}<br>#}
