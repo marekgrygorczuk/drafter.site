@@ -28,4 +28,8 @@ class RideStampTest extends \PHPUnit_Framework_TestCase
             [new \DateTime('2016-10-23'), RideStamp::SUNDAY, true],
         ];
     }
+    public function testRideHasNewIdDuringCreation() {
+        $rideStamp = new RideStamp();
+        $this->assertNotNull($rideStamp->getId());
+    }
 }

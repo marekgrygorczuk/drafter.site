@@ -28,7 +28,6 @@ class RideMintTest extends \PHPUnit_Framework_TestCase
 
     public function testWillHummerRideForRightDay()
     {
-        $this->mint = new RideMint();
         $rideStamp = new RideStamp();
         $rideStamp->setDayOfWeekOccurrence(RideStamp::FRIDAY);
         $firstDay = new \DateTime('2016-10-21');
@@ -43,7 +42,6 @@ class RideMintTest extends \PHPUnit_Framework_TestCase
 
     public function testWillHummer4RidesFor4Weeks()
     {
-        $this->mint = new RideMint();
         $rideStamp = new RideStamp();
         $rideStamp->setDayOfWeekOccurrence(RideStamp::FRIDAY);
         $firstDay = new \DateTime('2016-10-03');
@@ -54,7 +52,6 @@ class RideMintTest extends \PHPUnit_Framework_TestCase
 
     public function testWillHummerNoRideForWrongDay()
     {
-        $this->mint = new RideMint();
         $rideStamp = new RideStamp();
         $rideStamp->setDayOfWeekOccurrence(RideStamp::FRIDAY);
         $firstDay = new \DateTime('2016-10-22');

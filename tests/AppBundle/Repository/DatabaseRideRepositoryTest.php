@@ -4,10 +4,9 @@ namespace AppBundle\Repository;
 
 
 use AppBundle\Entity\Ride;
-use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class DoctrineRideRepositoryTest extends KernelTestCase
+class DatabaseRideRepositoryTest extends KernelTestCase
 {
 
     /**

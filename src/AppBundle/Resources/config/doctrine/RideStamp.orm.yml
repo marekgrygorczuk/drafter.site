@@ -1,0 +1,24 @@
+# src/AppBundle/Resources/config/doctrine/Ride.orm.yml
+AppBundle\Entity\Ride:
+    type: entity
+    table: ride
+    id:
+        id:
+            type: integer
+    fields:
+        name:
+            type: string
+            length: 100
+        location:
+            type: string
+            length: 100
+        beginning:
+            type: datetime
+
+#    manyToOne:
+#        owner:
+#            nullable: true
+#            targetEntity: AppBundle\Entity\User
+#            mappedBy: ownerId
+#            cascade:
+#                - persist

@@ -1,6 +1,8 @@
 <?php
 namespace AppBundle\Entity;
 
+use AppBundle\Dto\NewRideDto;
+
 class Ride
 {
     /**
@@ -26,10 +28,15 @@ class Ride
 
     public function __construct($location, \DateTime $beginning, $name)
     {
+        $this->id = mt_rand();
         $this->location = $location;
         $this->beginning = $beginning;
         $this->name = $name;
-        $this->id = mt_rand();
+    }
+
+    public static function newRideFromDto(NewRideDto $dto) : Ride
+    {
+        return new Ride($dto->rideLocation, $dto->rideBeginning, $dto->name);
     }
 
     /**
@@ -100,6 +107,14 @@ class Ride
     public function getBeginning()
     {
         return $this->beginning;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
 //    /**

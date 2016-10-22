@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 
+use AppBundle\Dto\NewRideDto;
+
 class RideStamp
 {
     // day of week as in ISO-8601
@@ -18,6 +20,23 @@ class RideStamp
      * @var int
      */
     private $dayOfWeek;
+    /**
+     * @var int
+     */
+    private $id;
+
+    /**
+     * @var NewRideDto
+     */
+    private $newRideDto;
+
+    /**
+     * RideStamp constructor.
+     */
+    public function __construct()
+    {
+        $this->id = mt_rand();
+    }
 
     /**
      * @param int $dayOfWeek
@@ -38,6 +57,19 @@ class RideStamp
     public function doesItHappenOn(\DateTime $date)
     {
         return ($date->format('N') == $this->dayOfWeek);
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return NewRideDto
+     */
+    public function getNewRideDto()
+    {
+        return $this->newRideDto;
     }
 
 }
