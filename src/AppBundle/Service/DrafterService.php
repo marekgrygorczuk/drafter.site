@@ -3,6 +3,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Dto\NewRideDto;
 use AppBundle\Entity\Ride;
+use AppBundle\Entity\RideStamp;
 use AppBundle\Repository\RideRepositoryInterface;
 use AppBundle\Repository\RideStampRepositoryInterface;
 
@@ -36,5 +37,13 @@ class DrafterService
     public function AllRides() : array
     {
         return $this->rideRepository->findAll();
+    }
+
+    public function addRideStamp(RideStamp $rideStamp)
+    {
+        if (!$this->rideStampRepository->add($rideStamp)) {
+            return false;
+        }
+        return true;
     }
 }

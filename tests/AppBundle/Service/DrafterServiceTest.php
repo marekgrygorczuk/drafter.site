@@ -2,7 +2,7 @@
 namespace tests\AppBundle\Service;
 
 use AppBundle\Dto\NewRideDto;
-use AppBundle\Entity\User;
+use AppBundle\Entity\RideStamp;
 use AppBundle\Repository\RideRepositoryInterface;
 use AppBundle\Repository\RideStampRepositoryInterface;
 use AppBundle\Service\DrafterService;
@@ -11,6 +11,7 @@ class DrafterServiceTest extends \PHPUnit_Framework_TestCase
 {
     private $rideRepository;
     private $rideStampRepository;
+    /** @var  DrafterService */
     private $drafterService;
 
     public function setUp()
@@ -40,6 +41,17 @@ class DrafterServiceTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(true));
 
         $this->assertTrue($this->drafterService->addRide($dto));
+    }
+    public function testServiceWillAddNewRideStamp()
+    {
+        $rideStamp = new RideStamp();
+
+        $this->rideStampRepository->expects($this->once())
+            ->method('add')
+            ->with($this->isInstanceOf(RideStamp::class))
+            ->will($this->returnValue(true));
+
+        $this->assertTrue($this->drafterService->addRideStamp($rideStamp));
     }
 
     public function testServiceWillFailWhenRepositoryFails()
