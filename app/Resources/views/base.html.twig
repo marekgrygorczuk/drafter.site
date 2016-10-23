@@ -2,12 +2,23 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Drafter - Let's find ride!{% endblock %}</title>
+        {% block meta %}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="keywords" content="drafter" />
+        {% endblock %}
+        <link href="{{ asset('css/bootstrap.css') }}" rel='stylesheet' type='text/css' />
+        {#<link href="{{ asset('css/style.css') }}" rel='stylesheet' type='text/css' />#}
+        <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400,500,700' rel='stylesheet' type='text/css'>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <script type="applijewelleryion/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     </head>
     <body>
+        {% include 'header.html.twig' %}
         {% block body %}{% endblock %}
+        {% include 'footer.html' %}
         {% block javascripts %}{% endblock %}
     </body>
 </html>

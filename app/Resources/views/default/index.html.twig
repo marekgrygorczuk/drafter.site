@@ -1,20 +1,30 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Drafter</h1>
-    <div id="wrapper" xmlns="http://www.w3.org/1999/html">
-        {% for ride in rides %}
-            <h2>{{ ride.name }}</h2>
-            {{ ride.location }}<br>
-            {{ ride.beginning|date("d.m.Y") }}<br>
-            {#owner id: {{ ride.owner.id }}<br>#}
-            ride id: {{ ride.id }}
-        {% endfor %}
-    </div>
+<div class="container">
+    <h2>Rides</h2>
+    {% for ride in rides %}
+        <div class="col-xs-6 col-sm-4 col-md-3">
+            <h3>{{ ride.name }}</h3>
+            <span>{{ ride.location }}</span>
+            <span>{{ ride.beginning|date("Y-m-d") }}</span>
+            <span>id: {{ ride.id }}</span>
+        </div>
+    {% endfor %}
+</div>
+<div class="clearfix"> </div>
+<div class="container" style="margin: auto">
+    <a href="{{ path('addRide') }}" class="btn btn-info btn-block" role="button">Add new ride</a>
+</div>
+
 {% endblock %}
 
 {% block stylesheets %}
 <style>
 
 </style>
+{% endblock %}
+
+{% block javascripts %}
+
 {% endblock %}
