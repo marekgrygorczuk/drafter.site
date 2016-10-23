@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h3>Add recurring ride.</h3>
+        <div class="col-xs-12 col-md-6" id="wrapper">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

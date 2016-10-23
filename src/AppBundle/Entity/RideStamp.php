@@ -72,4 +72,20 @@ class RideStamp
     {
         return $this->id;
     }
+
+    /**
+     * @return int
+     */
+    public function getDayOfWeek()
+    {
+        return $this->dayOfWeek;
+    }
+
+    /**
+     * @param int $dayOfWeek
+     */
+    public function setDayOfWeek($dayOfWeek)
+    {
+        $this->dayOfWeek = $dayOfWeek;
+    }
 }
