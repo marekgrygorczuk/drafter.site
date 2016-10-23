@@ -2,7 +2,6 @@
 
 namespace tests\AppBundle\Entity;
 
-use AppBundle\Dto\NewRideDto;
 use AppBundle\Entity\RideStamp;
 
 class RideStampTest extends \PHPUnit_Framework_TestCase

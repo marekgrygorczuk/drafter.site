@@ -6,7 +6,7 @@ services:
 
     drafter_service:
         class: AppBundle\Service\DrafterService
-        arguments: ["@database_ride_repository", "@database_ride_stamp_repository"]
+        arguments: ["@database_ride_repository", "@database_ride_stamp_repository", "@ride_mint"]
 
     database_ride_repository:
         class: AppBundle\Repository\DatabaseRideRepository
@@ -15,3 +15,6 @@ services:
     database_ride_stamp_repository:
         class: AppBundle\Repository\DatabaseRideStampRepository
         arguments: ["@doctrine.orm.default_entity_manager"]
+
+    ride_mint:
+        class: AppBundle\Entity\RideMint
