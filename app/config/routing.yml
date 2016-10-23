@@ -6,3 +6,7 @@ mainpage:
 addRide:
     path:     /addRide
     defaults: { _controller: default_controller:addRideAction }
+
+addRideStamp:
+    path:     /addRideStamp
+    defaults: { _controller: default_controller:addRideStampAction }

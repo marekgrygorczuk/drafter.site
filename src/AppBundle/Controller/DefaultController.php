@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\RideStamp;
 use AppBundle\Form\NewRideDtoType;
+use AppBundle\Form\RideStampType;
 use AppBundle\Service\DrafterService;
 use AppBundle\Dto\NewRideDto;
 use AppBundle\Entity\User;
@@ -66,6 +68,24 @@ class DefaultController extends Controller
             $this->drafterService->addRide($rideDto);
         }
         return $this->templating->renderResponse('default/addRide.html.twig', [
+                'form' => $form->createView()
+            ]
+        );
+    }
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function addRideStampAction(Request $request) {
+        $rideStamp = new RideStamp();
+        $form = $this->formFactory->create(RideStampType::class, $rideStamp);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $this->drafterService->addRideStamp($rideStamp);
+        }
+        return $this->templating->renderResponse('default/addRideStamp.html.twig', [
                 'form' => $form->createView()
             ]
         );

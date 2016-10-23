@@ -3,13 +3,28 @@ namespace tests\AppBundle\Service;
 
 use AppBundle\Dto\NewRideDto;
 use AppBundle\Entity\User;
+use AppBundle\Repository\RideRepositoryInterface;
+use AppBundle\Repository\RideStampRepositoryInterface;
 use AppBundle\Service\DrafterService;
 
 class DrafterServiceTest extends \PHPUnit_Framework_TestCase
 {
-    public function testIfPhpUnitWorks()
-    {
-        $this->assertTrue(true);
+    private $rideRepository;
+    private $rideStampRepository;
+    private $drafterService;
+
+    public function setUp() {
+
+        $this->rideRepository = $this->getMockBuilder(RideRepositoryInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->rideStampRepository = $this->getMockBuilder(RideStampRepositoryInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->drafterService = new DrafterService($this->rideRepository, $this->rideStampRepository);
+
     }
     public function testServiceWillAddNewRideWithSpecifiedUserAsOwner() {
         $dto = new NewRideDto();
@@ -17,18 +32,12 @@ class DrafterServiceTest extends \PHPUnit_Framework_TestCase
         $dto->rideLocation = 'warszawa';
         $dto->rideBeginning = new \DateTime();
 
-        $repositoryMock = $this->getMockBuilder('AppBundle\Repository\RideRepositoryInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $repositoryMock->expects($this->once())
+        $this->rideRepositoryk->expects($this->once())
             ->method('add')
             ->with($this->isInstanceOf('AppBundle\Entity\Ride'))
             ->will($this->returnValue(true));
 
-        $drafterService = new DrafterService($repositoryMock);
-
-        $this->assertTrue($drafterService->addRide($dto));
+        $this->assertTrue($this->drafterService->addRide($dto));
     }
     public function testServiceWillFailWhenRepositoryFails() {
         $dto = new NewRideDto();
@@ -36,29 +45,18 @@ class DrafterServiceTest extends \PHPUnit_Framework_TestCase
         $dto->rideLocation = 'warszawa';
         $dto->rideBeginning = new \DateTime();
 
-        $repositoryMock = $this->getMockBuilder('AppBundle\Repository\RideRepositoryInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $repositoryMock->expects($this->once())
+        $this->rideRepository->expects($this->once())
             ->method('add')
             ->with($this->isInstanceOf('AppBundle\Entity\Ride'))
             ->will($this->returnValue(false));
 
-        $drafterService = new DrafterService($repositoryMock);
-
-        $this->assertFalse($drafterService->addRide($dto));
+        $this->assertFalse($this->drafterService->addRide($dto));
     }
     public function testServiceWillListAllRides() {
-        $repositoryMock = $this->getMockBuilder('AppBundle\Repository\RideRepositoryInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $repositoryMock->expects($this->once())
+        $this->rideRepository->expects($this->once())
             ->method('findAll')
             ->will($this->returnValue([]));
 
-        $drafterService = new DrafterService($repositoryMock);
-        $this->assertEquals([], $drafterService->AllRides());
+        $this->assertEquals([], $this->drafterService->AllRides());
     }
 }
