@@ -13,7 +13,8 @@ class DrafterServiceTest extends \PHPUnit_Framework_TestCase
     private $rideStampRepository;
     private $drafterService;
 
-    public function setUp() {
+    public function setUp()
+    {
 
         $this->rideRepository = $this->getMockBuilder(RideRepositoryInterface::class)
             ->disableOriginalConstructor()
@@ -26,22 +27,24 @@ class DrafterServiceTest extends \PHPUnit_Framework_TestCase
         $this->drafterService = new DrafterService($this->rideRepository, $this->rideStampRepository);
 
     }
-    public function testServiceWillAddNewRideWithSpecifiedUserAsOwner() {
+
+    public function testServiceWillAddNewRide()
+    {
         $dto = new NewRideDto();
-        $dto->user = new User();
         $dto->rideLocation = 'warszawa';
         $dto->rideBeginning = new \DateTime();
 
-        $this->rideRepositoryk->expects($this->once())
+        $this->rideRepository->expects($this->once())
             ->method('add')
             ->with($this->isInstanceOf('AppBundle\Entity\Ride'))
             ->will($this->returnValue(true));
 
         $this->assertTrue($this->drafterService->addRide($dto));
     }
-    public function testServiceWillFailWhenRepositoryFails() {
+
+    public function testServiceWillFailWhenRepositoryFails()
+    {
         $dto = new NewRideDto();
-        $dto->user = new User();
         $dto->rideLocation = 'warszawa';
         $dto->rideBeginning = new \DateTime();
 
@@ -52,11 +55,14 @@ class DrafterServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($this->drafterService->addRide($dto));
     }
-    public function testServiceWillListAllRides() {
+
+    public function testServiceWillListAllRides()
+    {
         $this->rideRepository->expects($this->once())
             ->method('findAll')
             ->will($this->returnValue([]));
 
         $this->assertEquals([], $this->drafterService->AllRides());
     }
+
 }
