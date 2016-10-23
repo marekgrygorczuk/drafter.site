@@ -5,7 +5,8 @@
     <div class="container">
         <h3>Add new ride in your neighbourhood!</h3>
         <div class="col-xs-12 col-md-6" id="wrapper">
-            <form class="form-horizontal">
+            {#<form class="form-horizontal">#}
+            {{ form_start(form) }}
                 <div class="form-group">
                     <label class="control-label col-xs-12 col-sm-3" for="name">{{ form_label(form.name) }}</label>
                     <div class="col-xs-12 col-sm-9">
@@ -30,7 +31,8 @@
                         {{ form_widget(form.save) }}
                     </div>
                 </div>
-            </form>
+            {{ form_end(form) }}
+            {#</form>#}
         </div>
     </div>
 {% endblock %}
