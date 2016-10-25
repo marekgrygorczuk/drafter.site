@@ -18,8 +18,6 @@ AppBundle\Entity\RideStamp:
       type: float
     gpsLat:
       type: float
-    beginning:
-      type: datetime
     distance:
       type: integer
     gear:

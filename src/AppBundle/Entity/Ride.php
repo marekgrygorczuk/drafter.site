@@ -8,8 +8,8 @@ class Ride
     const GEAR_ROAD_BIKE = 'road_bike';
     const GEAR_MTB = 'mtb';
     const GEAR_CX = 'cyclocross';
+    const GEAR_TOURING = 'touring';
     const GEAR_RECUMBENT = 'weirdo';
-    const GEAR_TOURISTIC = 'tourist';
     const GEAR_ANY = 'any_bike';
 
     /**

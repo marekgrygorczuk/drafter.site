@@ -33,18 +33,29 @@ class DatabaseRideStampRepositoryTest extends KernelTestCase
             ->get('doctrine')
             ->getManager();
         $this->repository = new DatabaseRideStampRepository($this->em);
+
         $this->rideStamp1 = new RideStamp();
-        $this->rideStamp1->name = 'Masa';
-        $this->rideStamp1->rideClockHour = 17;
-        $this->rideStamp1->rideClockMinute = 30;
-        $this->rideStamp1->rideLocation = 'Warsaw';
         $this->rideStamp1->setDayOfWeekOccurrence(RideStamp::FRIDAY);
+        $this->rideStamp1->name = 'ride name';
+        $this->rideStamp1->rideClockHour = 9;
+        $this->rideStamp1->rideClockMinute = 15;
+        $this->rideStamp1->locationDescription = 'warsaw';
+        $this->rideStamp1->gpsLon = 20;
+        $this->rideStamp1->gpsLat = 50;
+        $this->rideStamp1->distance = 120;
+        $this->rideStamp1->gear = Ride::GEAR_ANY;
+
         $this->rideStamp2 = new RideStamp();
-        $this->rideStamp2->name = 'Babka';
-        $this->rideStamp2->rideClockHour = 9;
-        $this->rideStamp2->rideClockMinute = 00;
-        $this->rideStamp2->rideLocation = 'Warsaw';
-        $this->rideStamp2->setDayOfWeekOccurrence(RideStamp::SATURDAY);
+        $this->rideStamp2->setDayOfWeekOccurrence(RideStamp::FRIDAY);
+        $this->rideStamp2->name = 'ride name2';
+        $this->rideStamp2->rideClockHour = 10;
+        $this->rideStamp2->rideClockMinute = 30;
+        $this->rideStamp2->locationDescription = 'cracow';
+        $this->rideStamp2->gpsLon = 25;
+        $this->rideStamp2->gpsLat = 55;
+        $this->rideStamp2->distance = 90;
+        $this->rideStamp2->gear = Ride::GEAR_ROAD_BIKE;
+
     }
 
     public function testRepositoryWillSavePersistedObject()
