@@ -1,20 +1,31 @@
 # src/AppBundle/Resources/config/doctrine/RideStamp.orm.yml
 AppBundle\Entity\RideStamp:
-    type: entity
-    table: ridestamp
+  type: entity
+  table: ridestamp
+  id:
     id:
-        id:
-            type: integer
-    fields:
-        dayOfWeek:
-            type: integer
-        rideName:
-            type: string
-            length: 100
-        rideLocation:
-            type: string
-            length: 100
-        rideClockHour:
-            type: integer
-        rideClockMinute:
-            type: integer
+      type: integer
+  fields:
+    dayOfWeek:
+      type: integer
+    name:
+      type: string
+      length: 100
+    locationDescription:
+      type: string
+      length: 100
+    gpsLon:
+      type: float
+    gpsLat:
+      type: float
+    beginning:
+      type: datetime
+    distance:
+      type: integer
+    gear:
+      type: string
+      length: 100
+    rideClockHour:
+      type: integer
+    rideClockMinute:
+      type: integer

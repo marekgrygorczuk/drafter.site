@@ -28,7 +28,7 @@ class RideMintTest extends \PHPUnit_Framework_TestCase
         $expectedClockMinute = 15;
 
         $rideStamp = new RideStamp();
-        $rideStamp->rideName = $expectedName;
+        $rideStamp->name = $expectedName;
         $rideStamp->rideLocation = $expectedLocation;
         $rideStamp->setDayOfWeekOccurrence(RideStamp::FRIDAY);
         $rideStamp->rideClockHour = $expectedClockHour;
@@ -43,7 +43,7 @@ class RideMintTest extends \PHPUnit_Framework_TestCase
         foreach ($rides as $ride) {
             $this->assertEquals($firstDay->format('Y-m-d'), $ride->getBeginning()->format('Y-m-d'));
             $this->assertEquals($expectedName, $ride->getName());
-            $this->assertEquals($expectedLocation, $ride->getLocation());
+            $this->assertEquals($expectedLocation, $ride->getLocationDescription());
             $this->assertEquals($expectedClockHour, (int)$ride->getBeginning()->format("H"));
             $this->assertEquals($expectedClockMinute, (int)$ride->getBeginning()->format("i"));
         }

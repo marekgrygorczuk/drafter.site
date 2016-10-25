@@ -13,7 +13,7 @@ class RideMint
                 /** @var \DateTime $rideStart */
                 $rideStart = clone $day;
                 $rideStart->setTime($stamp->rideClockHour,$stamp->rideClockMinute);
-                $rides[] = new Ride($stamp->rideLocation, $rideStart, $stamp->rideName);
+                $rides[] = new Ride($stamp->rideLocation, $rideStart, $stamp->name);
             }
         }
         return $rides;

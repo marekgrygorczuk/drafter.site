@@ -34,13 +34,13 @@ class DatabaseRideStampRepositoryTest extends KernelTestCase
             ->getManager();
         $this->repository = new DatabaseRideStampRepository($this->em);
         $this->rideStamp1 = new RideStamp();
-        $this->rideStamp1->rideName = 'Masa';
+        $this->rideStamp1->name = 'Masa';
         $this->rideStamp1->rideClockHour = 17;
         $this->rideStamp1->rideClockMinute = 30;
         $this->rideStamp1->rideLocation = 'Warsaw';
         $this->rideStamp1->setDayOfWeekOccurrence(RideStamp::FRIDAY);
         $this->rideStamp2 = new RideStamp();
-        $this->rideStamp2->rideName = 'Babka';
+        $this->rideStamp2->name = 'Babka';
         $this->rideStamp2->rideClockHour = 9;
         $this->rideStamp2->rideClockMinute = 00;
         $this->rideStamp2->rideLocation = 'Warsaw';

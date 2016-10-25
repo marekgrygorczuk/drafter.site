@@ -3,10 +3,35 @@ namespace AppBundle\Dto;
 
 class NewRideDto
 {
+    /**
+     * @var string
+     */
     public $name;
-    public $rideLocation;
+    /**
+     * @var string
+     */
+    public $locationDescription;
+    /**
+     * @var float
+     */
+    public $gpsLon;
+    /**
+     * @var float
+     */
+    public $gpsLat;
     /**
      * @var \DateTime
      */
-    public $rideBeginning;
+    public $beginning;
+
+    /**
+     * @var int
+     */
+    public $distance;
+
+    /**
+     * @var string
+     */
+    public $gear;
+
 }
