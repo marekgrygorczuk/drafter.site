@@ -26,11 +26,31 @@ class RideStamp
     /**
      * @var string
      */
-    public $rideName;
+    public $name;
     /**
      * @var string
      */
-    public $rideLocation;
+    public $locationDescription;
+
+    /**
+     * @var float
+     */
+    public $gpsLon;
+    /**
+     * @var float
+     */
+    public $gpsLat;
+
+    /**
+     * @var int
+     */
+    public $distance;
+
+    /**
+     * @var string
+     */
+    public $gear;
+
     /**
      * @var int
      */

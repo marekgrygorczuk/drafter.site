@@ -2,9 +2,17 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Dto\NewRideDto;
+use Proxies\__CG__\AppBundle\Entity\RideStamp;
 
 class Ride
 {
+    const GEAR_ROAD_BIKE = 'road_bike';
+    const GEAR_MTB = 'mtb';
+    const GEAR_CX = 'cyclocross';
+    const GEAR_RECUMBENT = 'weirdo';
+    const GEAR_TOURISTIC = 'tourist';
+    const GEAR_ANY = 'any_bike';
+
     /**
      * @var int
      */
@@ -16,27 +24,76 @@ class Ride
     /**
      * @var string
      */
-    public $location;
+    public $locationDescription;
+    /**
+     * @var float
+     */
+    public $gpsLon;
+    /**
+     * @var float
+     */
+    public $gpsLat;
     /**
      * @var \DateTime
      */
     public $beginning;
+
+    /**
+     * @var int
+     */
+    public $distance;
+
+    /**
+     * @var string
+     */
+    public $gear;
+
+
 //    /**
 //     * @var User
 //     */
 //    public $owner;
 
-    public function __construct($location, \DateTime $beginning, $name)
+    public function __construct($location = null, \DateTime $beginning = null, $name = null)
     {
         $this->id = mt_rand();
-        $this->location = $location;
+        $this->locationDescription = $location;
         $this->beginning = $beginning;
         $this->name = $name;
     }
 
+    /**
+     * @param NewRideDto $dto
+     * @return Ride
+     */
     public static function newRideFromDto(NewRideDto $dto) : Ride
     {
-        return new Ride($dto->rideLocation, $dto->rideBeginning, $dto->name);
+        $ride = new Ride();
+        $ride->name = $dto->name;
+        $ride->beginning = $dto->beginning;
+        $ride->locationDescription = $dto->locationDescription;
+        $ride->gpsLon = $dto->gpsLon;
+        $ride->gpsLat = $dto->gpsLat;
+        $ride->distance = $dto->distance;
+        $ride->gear = $dto->gear;
+        return $ride;
+    }
+
+    /**
+     * @param RideStamp $stamp
+     * @return Ride
+     */
+    public static function newRideFromRideStamp(RideStamp $stamp) : Ride
+    {
+        $ride = new Ride();
+        $ride->name = $dto->name;
+        $ride->beginning = $dto->beginning;
+        $ride->locationDescription = $dto->locationDescription;
+        $ride->gpsLon = $dto->gpsLon;
+        $ride->gpsLat = $dto->gpsLat;
+        $ride->distance = $dto->distance;
+        $ride->gear = $dto->gear;
+        return $ride;
     }
 
     /**
@@ -64,13 +121,13 @@ class Ride
     /**
      * Set location
      *
-     * @param string $location
+     * @param string $locationDescription
      *
      * @return Ride
      */
-    public function setLocation($location)
+    public function setLocationDescription($locationDescription)
     {
-        $this->location = $location;
+        $this->locationDescription = $locationDescription;
 
         return $this;
     }
@@ -80,9 +137,9 @@ class Ride
      *
      * @return string
      */
-    public function getLocation()
+    public function getLocationDescription()
     {
-        return $this->location;
+        return $this->locationDescription;
     }
 
     /**
