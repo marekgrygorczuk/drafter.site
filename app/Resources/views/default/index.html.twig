@@ -6,9 +6,9 @@
     {% for ride in rides %}
         <div class="col-xs-6 col-sm-4 col-md-3">
             <h3>{{ ride.name }}</h3>
-            <span>{{ ride.location }}</span>
+            <span>{{ ride.locationDescription }}</span>
             <span>{{ ride.beginning|date("Y-m-d") }}</span>
-            <span>id: {{ ride.id }}</span>
+            <span></span>
         </div>
     {% endfor %}
 </div>
