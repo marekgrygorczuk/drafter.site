@@ -9,8 +9,12 @@ class RideMint
     {
         $rides = [];
         for ($day = clone $firstDay; $day <= $lastDay; $day->add(new \DateInterval('P1D'))) {
-            if ($stamp->doesItHappenOn($day))
-                $rides[] = new Ride('nowhere', clone $day, 'noname');
+            if ($stamp->doesItHappenOn($day)) {
+                /** @var \DateTime $rideStart */
+                $rideStart = clone $day;
+                $rideStart->setTime($stamp->rideClockHour,$stamp->rideClockMinute);
+                $rides[] = new Ride($stamp->rideLocation, $rideStart, $stamp->rideName);
+            }
         }
         return $rides;
     }

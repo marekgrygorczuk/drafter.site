@@ -68,7 +68,7 @@ class DrafterService
             return false;
         }
 
-        $newRides = $this->rideMint->hammerRides($rideStamp,new \DateTime(), new \DateTime(self::scheduleHorizon));
+        $newRides = $this->rideMint->hammerRides($rideStamp, new \DateTime(), new \DateTime(self::scheduleHorizon));
 
         /** @var Ride $ride */
         foreach ($newRides as $ride) {

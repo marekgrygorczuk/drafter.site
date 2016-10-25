@@ -22,15 +22,30 @@ class RideMintTest extends \PHPUnit_Framework_TestCase
 
     public function testWillHummerRideForRightDay()
     {
+        $expectedName = "expectedNAme";
+        $expectedLocation = "expectedLocation";
+        $expectedClockHour = 9;
+        $expectedClockMinute = 15;
+
         $rideStamp = new RideStamp();
+        $rideStamp->rideName = $expectedName;
+        $rideStamp->rideLocation = $expectedLocation;
         $rideStamp->setDayOfWeekOccurrence(RideStamp::FRIDAY);
+        $rideStamp->rideClockHour = $expectedClockHour;
+        $rideStamp->rideClockMinute = $expectedClockMinute;
+
         $firstDay = new \DateTime('2016-10-21');
         $lastDay = new \DateTime('2016-10-21');
+
         $rides = $this->mint->hammerRides($rideStamp, $firstDay, $lastDay);
         $this->assertEquals(1, count($rides));
         /** @var Ride $ride */
         foreach ($rides as $ride) {
             $this->assertEquals($firstDay->format('Y-m-d'), $ride->getBeginning()->format('Y-m-d'));
+            $this->assertEquals($expectedName, $ride->getName());
+            $this->assertEquals($expectedLocation, $ride->getLocation());
+            $this->assertEquals($expectedClockHour, (int)$ride->getBeginning()->format("H"));
+            $this->assertEquals($expectedClockMinute, (int)$ride->getBeginning()->format("i"));
         }
     }
 
