@@ -30,7 +30,6 @@ class NewRideDtoType extends AbstractType
                     'Any' => Ride::GEAR_ANY,
                 ]
             ])
-            ->add('beginning',DateTimeType::class)
             ->add('save', SubmitType::class);
     }
 }

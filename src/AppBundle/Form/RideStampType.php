@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Ride;
 use AppBundle\Entity\RideStamp;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -14,8 +15,8 @@ class RideStampType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('rideName')
-            ->add('rideLocation', TextareaType::class)
+            ->add('name')
+            ->add('locationDescription', TextareaType::class)
             ->add('rideClockHour',  ChoiceType::class, [
                 'choices' => [
                     '7' => 7,
@@ -51,6 +52,19 @@ class RideStampType extends AbstractType
                     'Friday' => RideStamp::FRIDAY,
                     'Saturday' => RideStamp::SATURDAY,
                     'Sunday' => RideStamp::SUNDAY
+                ]
+            ])
+            ->add('gpsLon')
+            ->add('gpsLat')
+            ->add('distance')
+            ->add('gear', ChoiceType::class, [
+                'choices' => [
+                    'Road' => Ride::GEAR_ROAD_BIKE,
+                    'Cyclocross' => Ride::GEAR_CX,
+                    'MTB' => Ride::GEAR_MTB,
+                    'Touring' => Ride::GEAR_TOURING,
+                    'Recumbent' => Ride::GEAR_RECUMBENT,
+                    'Any' => Ride::GEAR_ANY,
                 ]
             ])
             ->add('save', SubmitType::class);
