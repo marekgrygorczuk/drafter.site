@@ -59,6 +59,7 @@ class RideStamp
      * @var int
      */
     public $rideClockMinute;
+
     /**
      * RideStamp constructor.
      */
@@ -107,5 +108,23 @@ class RideStamp
     public function setDayOfWeek($dayOfWeek)
     {
         $this->dayOfWeek = $dayOfWeek;
+    }
+
+    public function createRideForThisDay(\DateTime $day) : Ride
+    {
+        $ride = new Ride();
+        $ride->name = $this->name;
+        $ride->locationDescription = $this->locationDescription;
+        $ride->gpsLon = $this->gpsLon;
+        $ride->gpsLat = $this->gpsLat;
+        $ride->distance = $this->distance;
+        $ride->gear = $this->gear;
+
+        $rideStart = clone $day;
+        $rideStart->setTime($this->rideClockHour, $this->rideClockMinute);
+        $ride->beginning = $rideStart;
+
+        return $ride;
+
     }
 }

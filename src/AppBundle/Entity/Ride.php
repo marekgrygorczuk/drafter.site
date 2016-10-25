@@ -2,7 +2,6 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Dto\NewRideDto;
-use Proxies\__CG__\AppBundle\Entity\RideStamp;
 
 class Ride
 {
@@ -70,29 +69,12 @@ class Ride
     {
         $ride = new Ride();
         $ride->name = $dto->name;
-        $ride->beginning = $dto->beginning;
         $ride->locationDescription = $dto->locationDescription;
         $ride->gpsLon = $dto->gpsLon;
         $ride->gpsLat = $dto->gpsLat;
         $ride->distance = $dto->distance;
         $ride->gear = $dto->gear;
-        return $ride;
-    }
-
-    /**
-     * @param RideStamp $stamp
-     * @return Ride
-     */
-    public static function newRideFromRideStamp(RideStamp $stamp) : Ride
-    {
-        $ride = new Ride();
-        $ride->name = $dto->name;
         $ride->beginning = $dto->beginning;
-        $ride->locationDescription = $dto->locationDescription;
-        $ride->gpsLon = $dto->gpsLon;
-        $ride->gpsLat = $dto->gpsLat;
-        $ride->distance = $dto->distance;
-        $ride->gear = $dto->gear;
         return $ride;
     }
 
