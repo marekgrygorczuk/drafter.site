@@ -1,24 +1,27 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,400,700,900&subset=latin-ext');
 
 body {
-  background-color: #EEEEEE;
+  background-color: #cbbf7a;
   font-family: 'Roboto', sans-serif;
+  color: #584d3d;
 }
 h1 {
-  color: #D60200;
+  color: #31708f;
   font-weight: bolder;
   font-size: 40px;
 }
 .ride-pane {
-  background-color: white;
+  background-color: #ebf38b;
   /*box-shadow: 0 0 5px grey ;*/
   margin: 0 0 20px  0;
+
 }
 
 .ride-pane-title {
   font-size: 18px;
   margin: 5px 0;
-  color: #241e4e;
+  color: #31708f;
+  font-weight: bolder;
 }
 .day {
   font-size: 20px;
