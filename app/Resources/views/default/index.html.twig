@@ -1,37 +1,43 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container">
-    {% for ride in rides %}
-        <div class="col-xs-12 col-sm-6">
-            <div class="ride-pane gear-type-mtb">
-                <div class="background-opacity">
-                    <div class="ride-pane-title">{{ ride.name }}</div>
-                    <div class="row">
-                        <div class="col-xs-8"><span class="day">{{ ride.beginning|date("Y-m-d, H:i") }}</span> {{ ride.locationDescription }} </div>
-                    </div>
-                    <div class="row ride-specs">
-                        <div class="col-xs-1 glyphicon glyphicon-map-marker"></div>
-                        <div class="col-xs-5">5km</div>
-                        <div class="col-xs-1 glyphicon glyphicon-road"></div>
-                        <div class="col-xs-4">120km</div>
+    <div class="container">
+        {% for ride in rides %}
+            <div class="col-xs-12 col-sm-6">
+                <div class="ride-pane gear-type-mtb">
+                    <div class="background-opacity">
+                        <div class="ride-pane-title">{{ ride.name }}</div>
+                        <div class="row">
+                            <div class="col-xs-8"><span class="day">
+                                    {% if date(ride.beginning) < date('+6days') %}
+                                        {{ ride.beginning|date("l, H:i") }}
+                                    {% else %}
+                                        {{ ride.beginning|date("Y-m-d, H:i") }}
+                                    {% endif %}</span> {{ ride.locationDescription }}
+                            </div>
+                        </div>
+                        <div class="row ride-specs">
+                            <div class="col-xs-1 glyphicon glyphicon-map-marker"></div>
+                            <div class="col-xs-5">5km</div>
+                            <div class="col-xs-1 glyphicon glyphicon-road"></div>
+                            <div class="col-xs-4">120km</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {% endfor %}
-</div>
-<div class="clearfix"> </div>
-<div class="container" style="margin: auto">
-    <a href="{{ path('addRide') }}" class="btn btn-info btn-block" role="button">Add new ride</a>
-</div>
+        {% endfor %}
+    </div>
+    <div class="clearfix"></div>
+    <div class="container" style="margin: auto">
+        <a href="{{ path('addRide') }}" class="btn btn-info btn-block" role="button">Add new ride</a>
+    </div>
 
 {% endblock %}
 
 {% block stylesheets %}
-<style>
+    <style>
 
-</style>
+    </style>
 {% endblock %}
 
 {% block javascripts %}
