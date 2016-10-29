@@ -42,6 +42,12 @@ class DatabaseRideRepository implements RideRepositoryInterface
         return $this->rideRepository->findAll();
     }
 
+    public function findUpcomingRides() {
+        $rides = $this->entityManager
+            ->createQuery('SELECT r FROM AppBundle:Ride r WHERE r.beginning > CURRENT_TIMESTAMP() ORDER BY r.beginning ASC')
+            ->getResult();
+        return $rides;
+    }
     public function remove(int $rideId) : bool
     {
         $rideToDelete = $this->get($rideId);

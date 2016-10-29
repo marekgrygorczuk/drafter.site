@@ -55,7 +55,7 @@ class DrafterService
 
     public function AllRides() : array
     {
-        return $this->rideRepository->findAll();
+        return $this->rideRepository->findUpcomingRides();
     }
 
     /**
