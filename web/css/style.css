@@ -60,7 +60,7 @@ h2 {
     background-image: url("../images/mtb.svg");
 }
 
-.gear-type-road-bike {
+.gear-type-road_bike {
     background-image: url("../images/road_bike.svg");
 }
 
@@ -84,7 +84,10 @@ h2 {
     color: #2d728f;
     /*font-weight: bolder;*/
 }
-
+.ride-description {
+    height: 45px;
+    overflow: hidden;
+}
 .day {
     font-size: 20px;
 }
