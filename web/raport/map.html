@@ -23,6 +23,8 @@
     $(document).ready(function() {
         $.getJSON("http://drafter.local/app_dev.php/ridesForMapJson", function (response) {
             var myLatlng = new google.maps.LatLng(52.2330653,21.0536351);
+            var bounds = new google.maps.LatLngBounds();
+
             var mapOptions = {
                 zoom: 11,
                 center: myLatlng
@@ -45,7 +47,11 @@
 
                 attachWindow(marker, ride.message);
                 marker.setMap(map);
+                var position = new google.maps.LatLng(ride.gpsLon, ride.gpsLat);
+                bounds.extend(position)
             });
+
+            map.fitBounds(bounds);
 
             // Attaches an info window to a marker with the provided message. When the
             // marker is clicked, the info window will open with the secret message.
