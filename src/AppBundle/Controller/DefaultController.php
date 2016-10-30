@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Ride;
 use AppBundle\Entity\RideStamp;
 use AppBundle\Form\NewRideDtoType;
 use AppBundle\Form\RideStampType;
@@ -10,6 +11,7 @@ use AppBundle\Dto\NewRideDto;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\EngineInterface;
@@ -52,6 +54,27 @@ class DefaultController extends Controller
             'rides' => $allRides,
             ]
         );
+    }
+
+    public function ridesForMapJsonAction()
+    {
+        $allRides = $this->drafterService->AllRides();
+        $jsonData = [];
+        $i = 0;
+        /** @var Ride $ride */
+        foreach ($allRides as $ride) {
+            $rideData = [
+                'gpsLat' => $ride->gpsLat,
+                'gpsLon' => $ride->gpsLon,
+                'message' => $this->templating->render(
+                    'default/mapRideWindow.html.twig',
+                    ['ride' => $ride]
+                )
+            ];
+            $jsonData['ride_'.$i] = $rideData;
+            $i++;
+        }
+        return new JsonResponse($jsonData);
     }
 
     /**
