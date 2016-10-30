@@ -19,9 +19,9 @@
 <div id="map"></div>
 <script type="text/javascript">
 
-    var accidents;
+    var rides;
     $(document).ready(function() {
-        $.getJSON("zdarzenia_piesi.json", function (response) {
+        $.getJSON("http://drafter.local/app_dev.php/ridesForMapJson", function (response) {
             var myLatlng = new google.maps.LatLng(52.2330653,21.0536351);
             var mapOptions = {
                 zoom: 11,
@@ -29,25 +29,21 @@
             };
             var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-            accidents = response;
-            var deathMarker = 'img/map/death_marker.svg';
-            var accidentMarker = 'img/map/accident_marker.svg';
-            var eventMarker = 'img/map/event_marker.svg';
+            rides = response;
+            console.log(rides);
+            var eventMarker = 'http://drafter.local/raport/img/map/event_marker.svg';
 
-            $.each(accidents, function(index, accident) {
-                var image;
-                if (parseInt(accident.deaths)>0) image = deathMarker;
-                else if (parseInt(accident.injuries)>0) image = accidentMarker;
-                else image = eventMarker;
+            $.each(rides, function(index, ride) {
+                console.log('add marker');
                 var marker = new google.maps.Marker({
                     position: {
-                        lat: parseFloat(accident.gps_lat),
-                        lng: parseFloat(accident.gps_lon)
+                        lat: parseFloat(ride.gpsLat),
+                        lng: parseFloat(ride.gpsLon)
                     },
-                    icon: image
+                    icon: eventMarker
                 });
 
-                attachWindow(marker, accident.message);
+                attachWindow(marker, ride.message);
                 marker.setMap(map);
             });
 
