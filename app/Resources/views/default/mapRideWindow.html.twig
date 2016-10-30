@@ -1,0 +1,23 @@
+<h2>{{ ride.name }},
+    <small>{{ ride.gear }}</small>
+</h2>
+<div class="row">
+    <div class="col-xs-12 col-sm-9 ride-description"><span class="day">
+                                {% if date(ride.beginning) < date('tomorrow') %}
+                                    today{{ ride.beginning|date(", H:i") }}
+                                {% elseif date(ride.beginning) < date('+2days midnight') %}
+                                    tomorrow{{ ride.beginning|date(", H:i") }}
+                                {% elseif date(ride.beginning) < date('+6days') %}
+                                    {{ ride.beginning|date("l, H:i") }}
+                                {% else %}
+                                    {{ ride.beginning|date("Y-m-d, H:i") }}
+                                {% endif %}</span> {{ ride.locationDescription }} </div>
+</div>
+<div class="row ride-specs">
+    <div class="col-xs-1 glyphicon glyphicon-map-marker"></div>
+    <div class="col-xs-5">5km</div>
+    <div class="col-xs-1 glyphicon glyphicon-road"></div>
+    <div class="col-xs-4">{{ ride.distance }}km</div>
+</div>
+
+
