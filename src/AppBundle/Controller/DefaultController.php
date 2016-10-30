@@ -56,27 +56,6 @@ class DefaultController extends Controller
         );
     }
 
-    public function ridesForMapJsonAction()
-    {
-        $allRides = $this->drafterService->AllRides();
-        $jsonData = [];
-        $i = 0;
-        /** @var Ride $ride */
-        foreach ($allRides as $ride) {
-            $rideData = [
-                'gpsLat' => $ride->gpsLat,
-                'gpsLon' => $ride->gpsLon,
-                'message' => $this->templating->render(
-                    'default/mapRideWindow.html.twig',
-                    ['ride' => $ride]
-                )
-            ];
-            $jsonData['ride_'.$i] = $rideData;
-            $i++;
-        }
-        return new JsonResponse($jsonData);
-    }
-
     /**
      * @param Request $request
      * @return Response

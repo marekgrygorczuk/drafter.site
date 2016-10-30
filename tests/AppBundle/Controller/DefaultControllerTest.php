@@ -33,13 +33,4 @@ class DefaultControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
-
-    public function testRidesOnMapJson()
-    {
-        $client = static::createClient();
-
-        $crawler = $client->request('GET', '/ridesForMapJson');
-
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-    }
 }

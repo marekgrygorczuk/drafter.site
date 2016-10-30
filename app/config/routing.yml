@@ -11,6 +11,3 @@ addRideStamp:
     path:     /addRideStamp
     defaults: { _controller: default_controller:addRideStampAction }
 
-ridesForMapJson:
-    path:     /ridesForMapJson
-    defaults: { _controller: default_controller:ridesForMapJsonAction }
