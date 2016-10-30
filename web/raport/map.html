@@ -17,60 +17,6 @@
 </head>
 <body>
 <div id="map"></div>
-<script type="text/javascript">
 
-    var rides;
-    $(document).ready(function() {
-        $.getJSON("http://drafter.local/app_dev.php/ridesForMapJson", function (response) {
-            var myLatlng = new google.maps.LatLng(52.2330653,21.0536351);
-            var bounds = new google.maps.LatLngBounds();
-
-            var mapOptions = {
-                zoom: 11,
-                center: myLatlng
-            };
-            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-            rides = response;
-            console.log(rides);
-            var eventMarker = 'http://drafter.local/raport/img/map/event_marker.svg';
-
-            $.each(rides, function(index, ride) {
-                console.log('add marker');
-                var marker = new google.maps.Marker({
-                    position: {
-                        lat: parseFloat(ride.gpsLat),
-                        lng: parseFloat(ride.gpsLon)
-                    },
-                    icon: eventMarker
-                });
-
-                attachWindow(marker, ride.message);
-                marker.setMap(map);
-                var position = new google.maps.LatLng(ride.gpsLon, ride.gpsLat);
-                bounds.extend(position)
-            });
-
-            map.fitBounds(bounds);
-
-            // Attaches an info window to a marker with the provided message. When the
-            // marker is clicked, the info window will open with the secret message.
-            function attachWindow(marker, message) {
-                var infowindow = new google.maps.InfoWindow({
-                    content: message
-                });
-
-                marker.addListener('click', function () {
-                    infowindow.open(marker.get('map'), marker);
-                });
-            }
-        });
-    });
-
-
-</script>
-<script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBalo2Pzwg8cNx-cOsHfvfrsCvwXrTZr3s">
-</script>
 </body>
 </html>

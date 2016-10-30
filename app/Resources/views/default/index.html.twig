@@ -2,6 +2,9 @@
 
 {% block body %}
     <div class="container">
+        <div class="hidden-xs col-sm-6 pull-right" style="height: 600px;">
+            {{ include('default/embeddedMap.html.twig', { 'rides': rides }) }}
+        </div>
         {% for ride in rides %}
             <div class="col-xs-12 col-sm-6">
                 <div class="ride-pane gear-type-{{ ride.gear }}">
