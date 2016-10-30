@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 100%;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+</head>
+<body>
+<div id="map"></div>
+<script type="text/javascript">
+
+    var accidents;
+    $(document).ready(function() {
+        $.getJSON("zdarzenia_piesi.json", function (response) {
+            var myLatlng = new google.maps.LatLng(52.2330653,21.0536351);
+            var mapOptions = {
+                zoom: 11,
+                center: myLatlng
+            };
+            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+            accidents = response;
+            var deathMarker = 'img/map/death_marker.svg';
+            var accidentMarker = 'img/map/accident_marker.svg';
+            var eventMarker = 'img/map/event_marker.svg';
+
+            $.each(accidents, function(index, accident) {
+                var image;
+                if (parseInt(accident.deaths)>0) image = deathMarker;
+                else if (parseInt(accident.injuries)>0) image = accidentMarker;
+                else image = eventMarker;
+                var marker = new google.maps.Marker({
+                    position: {
+                        lat: parseFloat(accident.gps_lat),
+                        lng: parseFloat(accident.gps_lon)
+                    },
+                    icon: image
+                });
+
+                attachWindow(marker, accident.message);
+                marker.setMap(map);
+            });
+
+            // Attaches an info window to a marker with the provided message. When the
+            // marker is clicked, the info window will open with the secret message.
+            function attachWindow(marker, message) {
+                var infowindow = new google.maps.InfoWindow({
+                    content: message
+                });
+
+                marker.addListener('click', function () {
+                    infowindow.open(marker.get('map'), marker);
+                });
+            }
+        });
+    });
+
+
+</script>
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBalo2Pzwg8cNx-cOsHfvfrsCvwXrTZr3s">
+</script>
+</body>
+</html>
