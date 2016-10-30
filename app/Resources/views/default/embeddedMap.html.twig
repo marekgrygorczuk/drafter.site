@@ -17,10 +17,7 @@
         });
     }
     var rides;
-    console.log('before map');
     $(document).ready(function () {
-        console.log('in map');
-//            $.getJSON("http://drafter.local/app_dev.php/ridesForMapJson", function (response) {
         var myLatlng = new google.maps.LatLng(52.2330653, 21.0536351);
         var bounds = new google.maps.LatLngBounds();
 
@@ -32,8 +29,6 @@
 
         rides = [];
 
-        var escapedMessage;
-
         {% for ride in rides %}
         rides.push({
             gpsLat: "{{ ride.gpsLat }}",
@@ -41,11 +36,9 @@
             message: `{{ include('default/mapRideWindow.html.twig', { 'ride': ride }) }}`
         });
         {% endfor %}
-        console.log(rides);
         var eventMarker = 'http://drafter.local/raport/img/map/event_marker.svg';
 
         $.each(rides, function (index, ride) {
-            console.log('add marker');
             var marker = new google.maps.Marker({
                 position: {
                     lat: parseFloat(ride.gpsLat),
@@ -74,7 +67,6 @@
             });
         }
 
-//            });
     });
 
 
