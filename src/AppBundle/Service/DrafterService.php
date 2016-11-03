@@ -24,20 +24,27 @@ class DrafterService
      * @var RideMint
      */
     private $rideMint;
+    /**
+     * @var RulerService
+     */
+    private $rulerService;
 
     /**
      * DrafterService constructor.
      * @param RideRepositoryInterface $rideRepository
      * @param RideStampRepositoryInterface $rideStampRepository
      * @param RideMint $rideMint
+     * @param RulerService $rulerService
      */
     public function __construct(RideRepositoryInterface $rideRepository,
                                 RideStampRepositoryInterface $rideStampRepository,
-                                RideMint $rideMint)
+                                RideMint $rideMint,
+                                RulerService $rulerService)
     {
         $this->rideRepository = $rideRepository;
         $this->rideStampRepository = $rideStampRepository;
         $this->rideMint = $rideMint;
+        $this->rulerService = $rulerService;
     }
 
     /**
@@ -56,6 +63,17 @@ class DrafterService
     public function AllRides() : array
     {
         return $this->rideRepository->findUpcomingRides();
+    }
+
+    public function findAllRidesWithDistances(GpsLocation $location) : array
+    {
+        $rides =  $this->rideRepository->findUpcomingRides();
+        $distances = [];
+        /** @var Ride $ride */
+        foreach ($rides as $ride) {
+            $distances[$ride->id] = $this->rulerService->getDistance($location, new GpsLocation($ride->gpsLat,$ride->gpsLon));
+        }
+        return ['rides' => $rides, 'distances' => $distances];
     }
 
     /**

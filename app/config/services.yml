@@ -6,7 +6,7 @@ services:
 
     drafter_service:
         class: AppBundle\Service\DrafterService
-        arguments: ["@database_ride_repository", "@database_ride_stamp_repository", "@ride_mint"]
+        arguments: ["@database_ride_repository", "@database_ride_stamp_repository", "@ride_mint", "@ruler_service"]
 
     database_ride_repository:
         class: AppBundle\Repository\DatabaseRideRepository
@@ -18,3 +18,6 @@ services:
 
     ride_mint:
         class: AppBundle\Entity\RideMint
+
+    ruler_service:
+        class: AppBundle\Service\RulerService

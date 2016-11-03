@@ -11,4 +11,5 @@ interface RideRepositoryInterface
     public function find(array $searchArguments) : array;
     public function findAll() : array;
     public function removeAll() : bool;
+    public function findUpcomingRides(): array;
 }

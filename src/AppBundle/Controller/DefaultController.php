@@ -9,6 +9,7 @@ use AppBundle\Form\RideStampType;
 use AppBundle\Service\DrafterService;
 use AppBundle\Dto\NewRideDto;
 use AppBundle\Entity\User;
+use AppBundle\Service\GpsLocation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -51,18 +52,19 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $cookies = $request->cookies;
-
         if ($cookies->has('drafter_lat')) {
-            var_dump($cookies->get('drafter_lat'));
-            var_dump($cookies->get('drafter_lon'));
-
+            $ridesWithDistances = $this->drafterService->findAllRidesWithDistances(new GpsLocation($cookies->get('drafter_lat'), $cookies->get('drafter_lon')));
+            return $this->templating->renderResponse('default/index.html.twig', [
+                    'rides' => $ridesWithDistances['rides'], 'distances' => $ridesWithDistances['distances']
+                ]
+            );
+        } else {
+            $allRides = $this->drafterService->AllRides();
+            return $this->templating->renderResponse('default/index.html.twig', [
+                    'rides' => $allRides, 'distances' => []
+                ]
+            );
         }
-        $allRides = $this->drafterService->AllRides();
-
-        return $this->templating->renderResponse('default/index.html.twig', [
-                'rides' => $allRides,
-            ]
-        );
     }
 
     /**
