@@ -45,13 +45,22 @@ class DefaultController extends Controller
     }
 
     /**
+     * @param Request $request
      * @return Response
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $cookies = $request->cookies;
+
+        if ($cookies->has('drafter_lat')) {
+            var_dump($cookies->get('drafter_lat'));
+            var_dump($cookies->get('drafter_lon'));
+
+        }
         $allRides = $this->drafterService->AllRides();
+
         return $this->templating->renderResponse('default/index.html.twig', [
-            'rides' => $allRides,
+                'rides' => $allRides,
             ]
         );
     }
@@ -60,7 +69,8 @@ class DefaultController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function addRideAction(Request $request) {
+    public function addRideAction(Request $request)
+    {
         $rideDto = new NewRideDto();
         $form = $this->formFactory->create(NewRideDtoType::class, $rideDto);
 
@@ -74,11 +84,13 @@ class DefaultController extends Controller
             ]
         );
     }
+
     /**
      * @param Request $request
      * @return Response
      */
-    public function addRideStampAction(Request $request) {
+    public function addRideStampAction(Request $request)
+    {
         $rideStamp = new RideStamp();
         $form = $this->formFactory->create(RideStampType::class, $rideStamp);
 

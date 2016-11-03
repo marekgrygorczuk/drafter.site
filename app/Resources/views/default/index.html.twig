@@ -24,9 +24,10 @@
                         </div>
                         <div class="row ride-specs">
                             <div class="col-xs-1 glyphicon glyphicon-map-marker"></div>
-                            <div class="col-xs-5">5km</div>
+                            <div class="col-xs-3">5km</div>
                             <div class="col-xs-1 glyphicon glyphicon-road"></div>
-                            <div class="col-xs-4">{{ ride.distance }}km</div>
+                            <div class="col-xs-3">{{ ride.distance }}km</div>
+                            <div class="col-xs-2">{{ ride.gear }}</div>
                         </div>
                     </div>
                 </div>
@@ -47,5 +48,34 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script>
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+        var drafter_lat = getCookie("drafter_lat");
+        if (drafter_lat == "") {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    console.log(position.coords.latitude, position.coords.longitude);
+                    document.cookie = "drafter_lat=" + position.coords.latitude + "; path=/";
+                    document.cookie = "drafter_lon=" + position.coords.longitude + "; path=/";
+                    location.reload();
+                });
+            } else {
+                console.log("fuck U");
+            }
+        }
 
+    </script>
 {% endblock %}
