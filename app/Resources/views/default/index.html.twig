@@ -24,7 +24,7 @@
                         </div>
                         <div class="row ride-specs">
                             <div class="col-xs-1 glyphicon glyphicon-map-marker"></div>
-                            <div class="col-xs-3">{{ distances[ride.id] }} km</div>
+                            <div class="col-xs-3">{{ ride.distanceToUser }} km</div>
                             <div class="col-xs-1 glyphicon glyphicon-road"></div>
                             <div class="col-xs-3">{{ ride.distance }} km</div>
                             <div class="col-xs-2">{{ ride.gear }}</div>
@@ -73,7 +73,7 @@
                     location.reload();
                 });
             } else {
-                console.log("fuck U");
+                console.log("no geolocation");
             }
         }
 

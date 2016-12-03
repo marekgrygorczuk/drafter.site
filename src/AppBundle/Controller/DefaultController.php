@@ -2,17 +2,15 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Ride;
+use AppBundle\Dto\RideListItem;
 use AppBundle\Entity\RideStamp;
 use AppBundle\Form\NewRideDtoType;
 use AppBundle\Form\RideStampType;
 use AppBundle\Service\DrafterService;
 use AppBundle\Dto\NewRideDto;
-use AppBundle\Entity\User;
 use AppBundle\Service\GpsLocation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormFactory;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Templating\EngineInterface;
@@ -53,18 +51,13 @@ class DefaultController extends Controller
     {
         $cookies = $request->cookies;
         if ($cookies->has('drafter_lat')) {
-            $ridesWithDistances = $this->drafterService->findAllRidesWithDistances(new GpsLocation($cookies->get('drafter_lat'), $cookies->get('drafter_lon')));
-            return $this->templating->renderResponse('default/index.html.twig', [
-                    'rides' => $ridesWithDistances['rides'], 'distances' => $ridesWithDistances['distances']
-                ]
-            );
+            $gpsLocation = new GpsLocation($cookies->get('drafter_lat'), $cookies->get('drafter_lon'));
         } else {
-            $allRides = $this->drafterService->AllRides();
-            return $this->templating->renderResponse('default/index.html.twig', [
-                    'rides' => $allRides, 'distances' => []
-                ]
-            );
+            $gpsLocation = null;
         }
+        /** @var RideListItem[] $ridesWithDistances */
+        $rideListItems = $this->drafterService->findAllRidesWithDistances($gpsLocation);
+        return $this->templating->renderResponse('default/index.html.twig', ['rides' => $rideListItems]);
     }
 
     /**

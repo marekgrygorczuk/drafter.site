@@ -2,6 +2,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Dto\NewRideDto;
+use AppBundle\Dto\RideListItem;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\RideMint;
 use AppBundle\Entity\RideStamp;
@@ -65,15 +66,33 @@ class DrafterService
         return $this->rideRepository->findUpcomingRides();
     }
 
-    public function findAllRidesWithDistances(GpsLocation $location) : array
+    /**
+     * @param GpsLocation|null $location
+     * @return RideListItem[]
+     */
+    public function findAllRidesWithDistances(GpsLocation $location = null) : array
     {
         $rides = $this->rideRepository->findUpcomingRides();
-        $distances = [];
+        $rideListItems = [];
         /** @var Ride $ride */
         foreach ($rides as $ride) {
-            $distances[$ride->id] = $this->rulerService->getDistance($location, new GpsLocation($ride->gpsLat, $ride->gpsLon));
+            if (empty($location))
+                $distance = null;
+            else
+                $distance = $this->rulerService->getDistance($location, new GpsLocation($ride->gpsLat, $ride->gpsLon));
+            $rideListItem = new RideListItem();
+            $rideListItem->id = $ride->id;
+            $rideListItem->name = $ride->name;
+            $rideListItem->locationDescription = $ride->locationDescription;
+            $rideListItem->gpsLon = $ride->gpsLon;
+            $rideListItem->gpsLat = $ride->gpsLat;
+            $rideListItem->beginning = $ride->beginning;
+            $rideListItem->distance = $ride->distance;
+            $rideListItem->gear = $ride->gear;
+            $rideListItem->distanceToUser = $distance;
+            $rideListItems[] = $rideListItem; 
         }
-        return ['rides' => $rides, 'distances' => $distances];
+        return $rideListItems;
     }
 
     /**
