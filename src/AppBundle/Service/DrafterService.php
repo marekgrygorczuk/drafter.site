@@ -2,6 +2,7 @@
 namespace AppBundle\Service;
 
 use AppBundle\Dto\NewRideDto;
+use AppBundle\Dto\RideFilters;
 use AppBundle\Dto\RideListItem;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\RideMint;
@@ -29,6 +30,10 @@ class DrafterService
      * @var RulerService
      */
     private $rulerService;
+    /**
+     * @var FilterService
+     */
+    private $filterService;
 
     /**
      * DrafterService constructor.
@@ -36,16 +41,19 @@ class DrafterService
      * @param RideStampRepositoryInterface $rideStampRepository
      * @param RideMint $rideMint
      * @param RulerService $rulerService
+     * @param FilterService $filterService
      */
     public function __construct(RideRepositoryInterface $rideRepository,
                                 RideStampRepositoryInterface $rideStampRepository,
                                 RideMint $rideMint,
-                                RulerService $rulerService)
+                                RulerService $rulerService,
+                                FilterService $filterService)
     {
         $this->rideRepository = $rideRepository;
         $this->rideStampRepository = $rideStampRepository;
         $this->rideMint = $rideMint;
         $this->rulerService = $rulerService;
+        $this->filterService = $filterService;
     }
 
     /**
@@ -61,9 +69,22 @@ class DrafterService
         return true;
     }
 
-    public function AllRides() : array
+    public function findUpcomingRides() : array
     {
         return $this->rideRepository->findUpcomingRides();
+    }
+
+    /**
+     * @param RideFilters $rideFilters
+     * @param GpsLocation $location
+     * @return mixed
+     */
+    public function findFilteredRideItems(RideFilters $rideFilters, GpsLocation$location) : array {
+        /** @var RideListItem[] $rides */
+        $rides = $this->findAllRidesWithDistances($location);
+        $filteredRides = $this->filterSer;
+
+        return $filteredRides;
     }
 
     /**
@@ -90,7 +111,7 @@ class DrafterService
             $rideListItem->distance = $ride->distance;
             $rideListItem->gear = $ride->gear;
             $rideListItem->distanceToUser = $distance;
-            $rideListItems[] = $rideListItem; 
+            $rideListItems[] = $rideListItem;
         }
         return $rideListItems;
     }

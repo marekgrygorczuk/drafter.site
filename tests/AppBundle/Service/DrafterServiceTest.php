@@ -2,12 +2,16 @@
 namespace tests\AppBundle\Service;
 
 use AppBundle\Dto\NewRideDto;
+use AppBundle\Dto\RideFilters;
+use AppBundle\Dto\RideListItem;
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\RideMint;
 use AppBundle\Entity\RideStamp;
 use AppBundle\Repository\RideRepositoryInterface;
 use AppBundle\Repository\RideStampRepositoryInterface;
 use AppBundle\Service\DrafterService;
+use AppBundle\Service\RulerService;
+use FilterService;
 
 class DrafterServiceTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,6 +23,10 @@ class DrafterServiceTest extends \PHPUnit_Framework_TestCase
     private $mintMock;
     /** @var  DrafterService */
     private $drafterService;
+    /** @var  RulerService|\PHPUnit_Framework_MockObject_MockObject */
+    private $rulerMock;
+    /** @var  FilterService|\PHPUnit_Framework_MockObject_MockObject */
+    private $filterMock;
 
     public function setUp()
     {
@@ -33,10 +41,18 @@ class DrafterServiceTest extends \PHPUnit_Framework_TestCase
         $this->mintMock = $this->getMockBuilder(RideMint::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $this->rulerMock = $this->getMockBuilder(RulerService::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->filterMock = $this->getMockBuilder(FilterService::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->drafterService = new DrafterService(
             $this->rideRepository,
             $this->rideStampRepository,
-            $this->mintMock);
+            $this->mintMock,
+            $this->rulerMock,
+            $this->filterMock);
 
     }
 
@@ -101,10 +117,9 @@ class DrafterServiceTest extends \PHPUnit_Framework_TestCase
     public function testServiceWillListAllRides()
     {
         $this->rideRepository->expects($this->once())
-            ->method('findAll')
+            ->method('findUpcomingRides')
             ->will($this->returnValue([]));
 
-        $this->assertEquals([], $this->drafterService->AllRides());
+        $this->assertEquals([], $this->drafterService->findUpcomingRides());
     }
-
 }
