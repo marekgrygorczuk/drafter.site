@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 
 class RideMint
 {
-    public function hammerRides(RideStamp $stamp, \DateTime $firstDay, \DateTime $lastDay)
+    public function hammerRides(RideStamp $stamp, \DateTime $firstDay, \DateTime $lastDay) : array
     {
         $rides = [];
         for ($day = clone $firstDay; $day <= $lastDay; $day->add(new \DateInterval('P1D'))) {

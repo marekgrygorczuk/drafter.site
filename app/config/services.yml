@@ -21,3 +21,9 @@ services:
 
     ruler_service:
         class: AppBundle\Service\RulerService
+
+    app.command.mint_missing_rides_command:
+        class: AppBundle\Command\MintMissingRidesCommand
+        arguments: ["@drafter_service"]
+        tags:
+            - { name: console.command }

@@ -67,11 +67,11 @@ class DrafterService
 
     public function findAllRidesWithDistances(GpsLocation $location) : array
     {
-        $rides =  $this->rideRepository->findUpcomingRides();
+        $rides = $this->rideRepository->findUpcomingRides();
         $distances = [];
         /** @var Ride $ride */
         foreach ($rides as $ride) {
-            $distances[$ride->id] = $this->rulerService->getDistance($location, new GpsLocation($ride->gpsLat,$ride->gpsLon));
+            $distances[$ride->id] = $this->rulerService->getDistance($location, new GpsLocation($ride->gpsLat, $ride->gpsLon));
         }
         return ['rides' => $rides, 'distances' => $distances];
     }
@@ -94,5 +94,16 @@ class DrafterService
         }
 
         return true;
+    }
+
+    public function mintAllRidesForNext4Weeks()
+    {
+        $rideStamps = $this->rideStampRepository->findAll();
+        foreach ($rideStamps as $rideStamp) {
+            $rides = $this->rideMint->hammerRides($rideStamp, new \DateTime(), new \DateTime('+4 weeks'));
+            foreach ($rides as $ride) {
+                $this->rideRepository->add($ride);
+            }
+        }
     }
 }
