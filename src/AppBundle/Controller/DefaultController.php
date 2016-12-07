@@ -52,18 +52,18 @@ class DefaultController extends Controller
     {
         $cookies = $request->cookies;
         if ($cookies->has('drafter_lat')) {
-            $gpsLocation = new GpsLocation($cookies->get('drafter_lat'), $cookies->get('drafter_lon'));
-//            $filters = new RideFilters();
-//            $filters->maxDistanceFromUser = 1000;
-//            $rideListItems = $this->drafterService->findFilteredRideItems($filters, $gpsLocation);
+            $userGpsLocation = new GpsLocation($cookies->get('drafter_lat'), $cookies->get('drafter_lon'));
+            $filters = new RideFilters();
+            $filters->maxDistanceFromUser = 1000;
+            $rideListItems = $this->drafterService->findFilteredRideItems($filters, $userGpsLocation);
 
         } else {
-            $gpsLocation = null;
-//            $rideListItems = $this->drafterService->findAllRidesWithDistances($gpsLocation);
+            $userGpsLocation = null;
+            $rideListItems = $this->drafterService->findAllRidesWithDistances($userGpsLocation);
         }
-        $rideListItems = $this->drafterService->findAllRidesWithDistances($gpsLocation);
+//        $rideListItems = $this->drafterService->findAllRidesWithDistances($userGpsLocation);
         /** @var RideListItem[] $ridesWithDistances */
-        return $this->templating->renderResponse('default/index.html.twig', ['rides' => $rideListItems, 'userLocation' => $gpsLocation]);
+        return $this->templating->renderResponse('default/index.html.twig', ['rides' => $rideListItems, 'userLocation' => $userGpsLocation]);
     }
 
     /**
