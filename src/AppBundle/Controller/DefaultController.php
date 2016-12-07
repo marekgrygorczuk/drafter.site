@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Dto\RideFilters;
 use AppBundle\Dto\RideListItem;
 use AppBundle\Entity\RideStamp;
 use AppBundle\Form\NewRideDtoType;
@@ -52,11 +53,15 @@ class DefaultController extends Controller
         $cookies = $request->cookies;
         if ($cookies->has('drafter_lat')) {
             $gpsLocation = new GpsLocation($cookies->get('drafter_lat'), $cookies->get('drafter_lon'));
+            $filters = new RideFilters();
+            $filters->maxDistanceFromUser = 100;
+            $rideListItems = $this->drafterService->findFilteredRideItems($filters, $gpsLocation);
+
         } else {
             $gpsLocation = null;
+            $rideListItems = $this->drafterService->findAllRidesWithDistances($gpsLocation);
         }
         /** @var RideListItem[] $ridesWithDistances */
-        $rideListItems = $this->drafterService->findAllRidesWithDistances($gpsLocation);
         return $this->templating->renderResponse('default/index.html.twig', ['rides' => $rideListItems]);
     }
 
