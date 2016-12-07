@@ -53,16 +53,17 @@ class DefaultController extends Controller
         $cookies = $request->cookies;
         if ($cookies->has('drafter_lat')) {
             $gpsLocation = new GpsLocation($cookies->get('drafter_lat'), $cookies->get('drafter_lon'));
-            $filters = new RideFilters();
-            $filters->maxDistanceFromUser = 100;
-            $rideListItems = $this->drafterService->findFilteredRideItems($filters, $gpsLocation);
+//            $filters = new RideFilters();
+//            $filters->maxDistanceFromUser = 1000;
+//            $rideListItems = $this->drafterService->findFilteredRideItems($filters, $gpsLocation);
 
         } else {
             $gpsLocation = null;
-            $rideListItems = $this->drafterService->findAllRidesWithDistances($gpsLocation);
+//            $rideListItems = $this->drafterService->findAllRidesWithDistances($gpsLocation);
         }
+        $rideListItems = $this->drafterService->findAllRidesWithDistances($gpsLocation);
         /** @var RideListItem[] $ridesWithDistances */
-        return $this->templating->renderResponse('default/index.html.twig', ['rides' => $rideListItems]);
+        return $this->templating->renderResponse('default/index.html.twig', ['rides' => $rideListItems, 'userLocation' => $gpsLocation]);
     }
 
     /**

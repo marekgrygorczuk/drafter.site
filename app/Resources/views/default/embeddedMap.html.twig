@@ -1,5 +1,4 @@
 <div id="map" style="width: 100%; height: 100%"></div>
-
 <script type="text/javascript">
 
     var entityMap = {
@@ -33,10 +32,18 @@
         rides.push({
             gpsLat: "{{ ride.gpsLat }}",
             gpsLon: "{{ ride.gpsLon }}",
-            message: `{{ include('default/mapRideWindow.html.twig', { 'ride': ride }) }}`
+            message: `{{ include('default/mapRideWindow.html.twig', { 'ride': ride }) }}`,
+            marker: '//drafter.local/raport/img/map/accident_marker.svg'
         });
         {% endfor %}
-        var eventMarker = 'http://drafter.local/raport/img/map/event_marker.svg';
+        {% if userLocation %}
+        rides.push({
+            gpsLat: "{{ userLocation.lat }}",
+            gpsLon: "{{ userLocation.lon }}",
+            message: "there you are!",
+            marker: '//drafter.local/raport/img/map/event_marker.svg'
+        });
+        {% endif %}
 
         $.each(rides, function (index, ride) {
             var marker = new google.maps.Marker({
@@ -44,7 +51,7 @@
                     lat: parseFloat(ride.gpsLat),
                     lng: parseFloat(ride.gpsLon)
                 },
-                icon: eventMarker
+                icon: ride.marker
             });
 
             attachWindow(marker, ride.message);
