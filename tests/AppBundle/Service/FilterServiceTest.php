@@ -43,4 +43,44 @@ class FilterServiceTest extends \PHPUnit_Framework_TestCase
             $this->assertLessThanOrEqual(25, $filteredRide->distanceToUser);
         }
     }
+    public function testServiceWillFilterOutTooShortRides()
+    {
+        $rideItem1 = new RideListItem();
+        $rideItem1->distance = 20;
+        $rideItem2 = new RideListItem();
+        $rideItem2->distance = 25;
+        $rideItem3 = new RideListItem();
+        $rideItem3->distance = 30;
+        $rideItems = [$rideItem1, $rideItem2, $rideItem3];
+
+        $filters = new RideFilters();
+        $filters->minRideDistance= 25;
+
+        $filteredRides = $this->filterService->filterRideItems($rideItems, $filters);
+        $this->assertEquals(2, count($filteredRides));
+        /** @var RideListItem $filteredRide */
+        foreach ($filteredRides as $filteredRide) {
+            $this->assertGreaterThanOrEqual(25, $filteredRide->distance);
+        }
+    }
+    public function testServiceWillFilterOutTooLongRides()
+    {
+        $rideItem1 = new RideListItem();
+        $rideItem1->distance = 20;
+        $rideItem2 = new RideListItem();
+        $rideItem2->distance = 25;
+        $rideItem3 = new RideListItem();
+        $rideItem3->distance = 30;
+        $rideItems = [$rideItem1, $rideItem2, $rideItem3];
+
+        $filters = new RideFilters();
+        $filters->maxRideDistance= 25;
+
+        $filteredRides = $this->filterService->filterRideItems($rideItems, $filters);
+        $this->assertEquals(2, count($filteredRides));
+        /** @var RideListItem $filteredRide */
+        foreach ($filteredRides as $filteredRide) {
+            $this->assertLessThanOrEqual(25, $filteredRide->distance);
+        }
+    }
 }

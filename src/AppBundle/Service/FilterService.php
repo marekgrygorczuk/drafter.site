@@ -18,6 +18,15 @@ class FilterService {
                 if ($rideItem->distanceToUser > $filters->maxDistanceFromUser)
                     continue;
             }
+            if (!empty($filters->minRideDistance)) {
+                if ($rideItem->distance < $filters->minRideDistance)
+                    continue;
+            }
+            if (!empty($filters->maxRideDistance)) {
+                if ($rideItem->distance > $filters->maxRideDistance)
+                    continue;
+            }
+
             $filteredRides[] = $rideItem;
         }
         return $filteredRides;
