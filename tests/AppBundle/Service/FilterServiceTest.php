@@ -18,10 +18,13 @@ class FilterServiceTest extends \PHPUnit_Framework_TestCase
     /** @var  FilterService */
     private $filterService;
 
-    public function setUp() {
+    public function setUp()
+    {
         $this->filterService = new FilterService();
     }
-    public function testServiceWillFilterOutTooFarRides() {
+
+    public function testServiceWillFilterOutTooFarRides()
+    {
         $rideItem1 = new RideListItem();
         $rideItem1->distanceToUser = 20;
         $rideItem2 = new RideListItem();
