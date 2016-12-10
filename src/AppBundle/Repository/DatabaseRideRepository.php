@@ -45,7 +45,7 @@ class DatabaseRideRepository implements RideRepositoryInterface
     public function findUpcomingRides() : array
     {
         $rides = $this->entityManager
-            ->createQuery('SELECT r FROM AppBundle:Ride r WHERE r.beginning > CURRENT_TIMESTAMP() ORDER BY r.beginning ASC')
+            ->createQuery('SELECT r FROM AppBundle:Ride r WHERE r.beginning > CURRENT_DATE() AND r.beginning < DATE_ADD(CURRENT_DATE(),7, \'day\') ORDER BY r.beginning ASC')
             ->getResult();
         return $rides;
     }
