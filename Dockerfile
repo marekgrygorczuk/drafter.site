@@ -27,7 +27,7 @@ USER www-data
 RUN cd /tmp && curl -sS https://getcomposer.org/installer | php
 #COPY parameters.yml /var/www/app/config/parameters.yml
 RUN cd /var/www && /tmp/composer.phar install
-RUN php app/console doctrine:database:create
+RUN cd /var/www && php app/console doctrine:database:create
 USER root
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
