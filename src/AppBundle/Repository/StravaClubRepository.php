@@ -26,11 +26,11 @@ class StravaClubRepository
         try {
             $this->get($club->id);
         } catch (\Exception $e) {
-            return false;
+            $this->entityManager->persist($club);
+            $this->entityManager->flush();
+            return true;
         }
-        $this->entityManager->persist($club);
-        $this->entityManager->flush();
-        return true;
+        return false;
     }
 
     public function get(int $clubId) : StravaClub
