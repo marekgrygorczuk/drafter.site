@@ -38,6 +38,11 @@ class StravaController extends Controller
     {
         $code = $_REQUEST['code'];
         $response = $this->stravaService->authorizeToken($code);
+        $response = json_decode($response, true);
+        foreach($response['athlete']['clubs'] as $club) {
+            $this->stravaService->saveNewClub($club);
+//            $this->stravaService->importClubEvents($club['id']);
+        }
         return $this->templating->renderResponse('strava/return.html.twig');
     }
 }

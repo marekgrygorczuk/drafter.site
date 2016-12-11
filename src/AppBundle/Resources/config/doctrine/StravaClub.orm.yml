@@ -1,0 +1,26 @@
+# src/AppBundle/Resources/config/doctrine/Ride.orm.yml
+AppBundle\Entity\StravaClub:
+  type: entity
+  table: stravaclub
+  id:
+    id:
+      type: integer
+  fields:
+    name:
+      type: string
+      length: 100
+
+    city:
+      type: string
+      length: 100
+
+    state:
+      type: string
+      length: 100
+
+    country:
+      type: string
+      length: 100
+
+    private:
+      type: boolean
