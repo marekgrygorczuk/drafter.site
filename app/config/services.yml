@@ -4,6 +4,13 @@ services:
         class: AppBundle\Controller\DefaultController
         arguments: ["@drafter_service", '@templating', '@form.factory']
 
+    strava_controller:
+        class: AppBundle\Controller\StravaController
+        arguments: ["@strava_service", '@templating']
+
+    strava_service:
+        class: AppBundle\Service\StravaService
+
     drafter_service:
         class: AppBundle\Service\DrafterService
         arguments: ["@database_ride_repository", "@database_ride_stamp_repository", "@ride_mint", "@ruler_service", "@filter_service"]

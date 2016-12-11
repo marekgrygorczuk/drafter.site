@@ -11,3 +11,11 @@ addRideStamp:
     path:     /addRideStamp
     defaults: { _controller: default_controller:addRideStampAction }
 
+authorizeStrava:
+    path:     /strava/authorize
+    defaults: { _controller: strava_controller:authorizeAction }
+
+returnStrava:
+    path:     /strava/return
+    defaults: { _controller: strava_controller:returnAction }
+
