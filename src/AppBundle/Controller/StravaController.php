@@ -31,6 +31,7 @@ class StravaController extends Controller
     {
         return $this->templating->renderResponse('strava/authorize.html.twig');
     }
+
     /**
      * @return Response
      */
@@ -39,9 +40,10 @@ class StravaController extends Controller
         $code = $_REQUEST['code'];
         $response = $this->stravaService->authorizeToken($code);
         $response = json_decode($response, true);
-        foreach($response['athlete']['clubs'] as $club) {
+        $access_token = $response['access_token'];
+        foreach ($response['athlete']['clubs'] as $club) {
             $this->stravaService->saveNewClub($club);
-//            $this->stravaService->importClubEvents($club['id']);
+            $this->stravaService->importClubEvents($club['id'], $access_token);
         }
         return $this->templating->renderResponse('strava/return.html.twig');
     }

@@ -25,25 +25,17 @@ class StravaService
             'code' => $code
         ];
 
-
         $options = [
             CURLOPT_URL => 'https://www.strava.com/oauth/token',
             CURLOPT_HEADER => false,
             CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS =>$payload,
+            CURLOPT_POSTFIELDS => $payload,
             CURLOPT_RETURNTRANSFER => true
         ];
 
         $ch = curl_init();
-
         curl_setopt_array($ch, $options);
-
         $response = curl_exec($ch);
-
-//        $error    = curl_error($ch);
-//        $errno    = curl_errno($ch);
-
-
         curl_close($ch);
 
         return $response;
@@ -61,5 +53,21 @@ class StravaService
 
         $this->repository->add($club);
         return true;
+    }
+
+    public function importClubEvents($clubId, $access_token)
+    {
+        $options = [
+            CURLOPT_URL => 'https://www.strava.com/api/v3/clubs/' . $clubId . '/group_events',
+            CURLOPT_HTTPHEADER => ["Authorization: Bearer " . $access_token],
+            CURLOPT_RETURNTRANSFER => true
+        ];
+
+        $ch = curl_init();
+        curl_setopt_array($ch, $options);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        return $response;
     }
 }
