@@ -28,5 +28,8 @@ RUN cd /tmp && curl -sS https://getcomposer.org/installer | php
 #COPY parameters.yml /var/www/app/config/parameters.yml
 RUN cd /var/www && /tmp/composer.phar install
 USER root
+# forward request and error logs to docker log collector
+RUN ln -sf /dev/stdout /var/log/nginx/access.log
+RUN ln -sf /dev/stderr /var/log/nginx/error.log
 EXPOSE 80
 CMD php-fpm7.0 && nginx -g "daemon off;"
