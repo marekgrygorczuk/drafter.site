@@ -25,6 +25,5 @@ AppBundle\Entity\StravaRide:
     address:
       type: string
       length: 100
-    occurrencies:
-      type: string
-      length: 200
+    occurrences:
+      type: array

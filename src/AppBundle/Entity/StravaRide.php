@@ -15,4 +15,6 @@ class StravaRide
     public $private;
     public $upcoming_occurrences;
     public $address;
+    /** @var  \DateTime[] */
+    public $occurrences;
 }

@@ -91,6 +91,10 @@ class StravaService
             $newClubRide->route_id = $clubRide['route_id'];
             $newClubRide->address = $clubRide['address'];
             $newClubRide->private = $clubRide['private'];
+            $newClubRide->occurrences = [];
+            foreach ($clubRide["upcoming_occurrences"] as $upcoming_occurrence) {
+                $newClubRide->occurrences[] = new \DateTime($upcoming_occurrence);
+            }
             $this->rideRepository->add($newClubRide);
         }
     }
