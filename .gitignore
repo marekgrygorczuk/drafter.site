@@ -15,5 +15,10 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
-
 .checkout/.DS_Store
+web/.DS_Store
+.DS_Store
+
+web/.DS_Store
+
+.DS_Store
