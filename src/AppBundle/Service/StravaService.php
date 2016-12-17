@@ -68,8 +68,6 @@ class StravaService
             CURLOPT_URL => 'https://www.strava.com/api/v3/clubs/' . $clubId . '/group_events',//?upcoming=true',
             CURLOPT_HTTPHEADER => ["Authorization: Bearer " . $access_token],
             CURLOPT_RETURNTRANSFER => true,
-//            CURLOPT_POST => true,
-//            CURLOPT_POSTFIELDS => ['upcoming' => true],
         ];
 
         $ch = curl_init();
@@ -77,9 +75,7 @@ class StravaService
         $response = curl_exec($ch);
         curl_close($ch);
 
-//        var_dump($response);
         $clubRides = json_decode($response, true);
-        var_dump($clubRides);
         if (!empty($clubRides['errors'])) return;
         foreach ($clubRides as $clubRide) {
             $newClubRide = new StravaRide();
