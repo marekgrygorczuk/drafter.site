@@ -44,6 +44,7 @@ class StravaController extends Controller
         foreach ($response['athlete']['clubs'] as $club) {
             $this->stravaService->saveNewClub($club);
             $this->stravaService->importClubEvents($club['id'], $access_token);
+//            break;
         }
         return $this->templating->renderResponse('strava/return.html.twig');
     }

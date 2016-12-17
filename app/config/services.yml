@@ -10,7 +10,7 @@ services:
 
     strava_service:
         class: AppBundle\Service\StravaService
-        arguments: ["@strava_club_repository"]
+        arguments: ["@strava_club_repository", "@strava_ride_repository"]
 
     drafter_service:
         class: AppBundle\Service\DrafterService
@@ -22,6 +22,10 @@ services:
 
     strava_club_repository:
         class: AppBundle\Repository\StravaClubRepository
+        arguments: ["@doctrine.orm.default_entity_manager"]
+
+    strava_ride_repository:
+        class: AppBundle\Repository\StravaRideRepository
         arguments: ["@doctrine.orm.default_entity_manager"]
 
     database_ride_stamp_repository:

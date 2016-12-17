@@ -3,18 +3,25 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\StravaClub;
+use AppBundle\Entity\StravaRide;
 use AppBundle\Repository\StravaClubRepository;
+use AppBundle\Repository\StravaRideRepository;
 
 class StravaService
 {
     /**
      * @var StravaClubRepository
      */
-    private $repository;
+    private $clubRepository;
+    /**
+     * @var StravaRideRepository
+     */
+    private $rideRepository;
 
-    public function __construct(StravaClubRepository $repository)
+    public function __construct(StravaClubRepository $repository, StravaRideRepository $rideRepository)
     {
-        $this->repository = $repository;
+        $this->clubRepository = $repository;
+        $this->rideRepository = $rideRepository;
     }
 
     public function authorizeToken($code) : string
@@ -51,16 +58,18 @@ class StravaService
         $club->country = $clubArray['country'];
         $club->private = $clubArray['private'];
 
-        $this->repository->add($club);
+        $this->clubRepository->add($club);
         return true;
     }
 
-    public function importClubEvents($clubId, $access_token)
+    public function importClubEvents($clubId, $access_token) // : void //as of 7.1
     {
         $options = [
-            CURLOPT_URL => 'https://www.strava.com/api/v3/clubs/' . $clubId . '/group_events',
+            CURLOPT_URL => 'https://www.strava.com/api/v3/clubs/' . $clubId . '/group_events',//?upcoming=true',
             CURLOPT_HTTPHEADER => ["Authorization: Bearer " . $access_token],
-            CURLOPT_RETURNTRANSFER => true
+            CURLOPT_RETURNTRANSFER => true,
+//            CURLOPT_POST => true,
+//            CURLOPT_POSTFIELDS => ['upcoming' => true],
         ];
 
         $ch = curl_init();
@@ -68,6 +77,21 @@ class StravaService
         $response = curl_exec($ch);
         curl_close($ch);
 
-        return $response;
+//        var_dump($response);
+        $clubRides = json_decode($response, true);
+        var_dump($clubRides);
+        if (!empty($clubRides['errors'])) return;
+        foreach ($clubRides as $clubRide) {
+            $newClubRide = new StravaRide();
+            $newClubRide->id = $clubRide['id'];
+            $newClubRide->title = $clubRide['title'];
+            $newClubRide->description = $clubRide['description'];
+            $newClubRide->club_id = $clubRide['club_id'];
+            $newClubRide->activity_type = $clubRide['activity_type'];
+            $newClubRide->route_id = $clubRide['route_id'];
+            $newClubRide->address = $clubRide['address'];
+            $newClubRide->private = $clubRide['private'];
+            $this->rideRepository->add($newClubRide);
+        }
     }
 }

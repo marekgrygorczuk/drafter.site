@@ -1,0 +1,30 @@
+# src/AppBundle/Resources/config/doctrine/StravaRide.orm.yml
+AppBundle\Entity\StravaRide:
+  type: entity
+  table: stravaride
+  id:
+    id:
+      type: integer
+  fields:
+    title:
+      type: string
+      length: 100
+    description:
+      type: string
+      length: 100
+    club_id:
+      type: integer
+      length: 100
+    activity_type:
+      type: string
+      length: 100
+    route_id:
+      type: string
+      length: 100
+      nullable: true
+    address:
+      type: string
+      length: 100
+    occurrencies:
+      type: string
+      length: 200
