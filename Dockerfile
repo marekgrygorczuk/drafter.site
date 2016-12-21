@@ -39,7 +39,6 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
 # forward Symphony logs logs to docker log collector
 RUN ln -sf /dev/stdout /var/www/var/logs/prod.log
-RUN ln -sf /dev/stdout /var/www/var/logs/dev.log
 RUN ln -sf /dev/stdout /var/log/php7.0-fpm.log
 EXPOSE 80
 CMD cd /var/www && php bin/console doctrine:schema:update --force && php-fpm7.0 && nginx -g "daemon off;"
