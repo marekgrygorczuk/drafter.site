@@ -37,7 +37,7 @@ class StravaAdapterTest extends \PHPUnit_Framework_TestCase
         $stravaRide->address = 'Ride address';
         $stravaRide->occurrences = [new \DateTime('2016-01-01')];
 
-        $drafterRide = $this->stravaAdapter->mapToDrafterRides($stravaRide);
+        $drafterRide = $this->stravaAdapter->mapToDrafterRides($stravaRide)[0];
         $this->assertEquals('Ride Title', $drafterRide->name);
         $this->assertEquals('Ride address', $drafterRide->locationDescription);
         $this->assertEquals(new \DateTime('2016-01-01'), $drafterRide->beginning);

@@ -8,7 +8,6 @@ use AppBundle\Entity\StravaRide;
 
 class StravaAdapter
 {
-
     public function mapToDrafterRides(StravaRide $stravaRide) : array
     {
         $drafterRides = [];
