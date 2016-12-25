@@ -11,23 +11,37 @@ namespace tests\AppBundle\Service;
 
 use AppBundle\Entity\Ride;
 use AppBundle\Entity\StravaRide;
+use AppBundle\Repository\StravaRideRepository;
 use AppBundle\Service\StravaAdapter;
 
 class StravaAdapterTest extends \PHPUnit_Framework_TestCase
 {
     /** @var  StravaAdapter */
     private $stravaAdapter;
+    /** @var  StravaRideRepository | \PHPUnit_Framework_MockObject_MockObject */
+    private $stravaRideRepository;
 
     public function setUp()
     {
-        $this->stravaAdapter = new StravaAdapter();
+        $this->stravaRideRepository = $this->getMockBuilder(StravaRideRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->stravaAdapter = new StravaAdapter($this->stravaRideRepository);
     }
 
     //later, for now simple mapping
     public function testReturnsAllStravaRidesAsDrafterRides()
     {
-        $stravaRide = new StravaRide();
-        $expectedDrafterRide = new Ride();
+        $stravaRide1 = new StravaRide();
+        $stravaRide1->occurrences = [new \DateTime()];
+        $stravaRide2 = new StravaRide();
+        $stravaRide2->occurrences = [new \DateTime()];
+
+        $this->stravaRideRepository->expects($this->once())
+            ->method('findAll')
+            ->will($this->returnValue([$stravaRide1, $stravaRide2]));
+
+        $this->assertEquals(2, count($this->stravaAdapter->findAllRides()));
     }
 
     public function testMapsSingleOccurrenceStravaRideToOneDrafterRide()

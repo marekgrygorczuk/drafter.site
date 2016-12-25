@@ -5,6 +5,7 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\StravaClub;
 use AppBundle\Entity\StravaRide;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 class StravaRideRepository
@@ -13,12 +14,21 @@ class StravaRideRepository
      * @var EntityManager
      */
     private $entityManager;
+    /**
+     * @var EntityRepository
+     */
+    private $stravaRideRepository;
 
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->StravaClubRepository = $this->entityManager->getRepository('AppBundle:StravaRide');
+        $this->stravaRideRepository = $this->entityManager->getRepository('AppBundle:StravaRide');
 
+    }
+
+    public function findAll() : array
+    {
+        return $this->stravaRideRepository->findAll();
     }
 
     public function add(StravaRide $club) : bool
@@ -36,7 +46,7 @@ class StravaRideRepository
 
     public function get(int $clubId) : StravaRide
     {
-        $club = $this->StravaClubRepository->find($clubId);
+        $club = $this->stravaRideRepository->find($clubId);
         if (!$club) throw new \Exception('no ride found');
         return $club;
     }
