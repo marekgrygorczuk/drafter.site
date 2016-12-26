@@ -79,7 +79,8 @@ class DrafterService
      * @param GpsLocation $location
      * @return mixed
      */
-    public function findFilteredRideItems(RideFilters $rideFilters, GpsLocation$location) : array {
+    public function findFilteredRideItems(RideFilters $rideFilters, GpsLocation $location) : array
+    {
         /** @var RideListItem[] $rides */
         $rides = $this->findAllRidesWithDistances($location);
         $filteredRides = $this->filterService->filterRideItems($rides, $rideFilters);

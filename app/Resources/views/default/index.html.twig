@@ -12,7 +12,9 @@
                         <div class="ride-pane-title">{{ ride.name }}</div>
                         <div class="row">
                             <div class="col-xs-12 col-sm-9 ride-description"><span class="day">
-                                {% if date(ride.beginning) < date('tomorrow') %}
+                                {% if date(ride.beginning) < date('today') %}
+                                    {{ ride.beginning|date("Y-m-d, H:i") }}
+                                {% elseif date(ride.beginning) < date('tomorrow') %}
                                     today{{ ride.beginning|date(", H:i") }}
                                 {% elseif date(ride.beginning) < date('+2days midnight') %}
                                     tomorrow{{ ride.beginning|date(", H:i") }}
