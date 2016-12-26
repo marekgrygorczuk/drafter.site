@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 
 use AppBundle\Entity\Ride;
+use AppBundle\Service\StravaAdapter;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -17,12 +18,16 @@ class DatabaseRideRepository implements RideRepositoryInterface
      * @var EntityRepository
      */
     private $rideRepository;
+    /**
+     * @var StravaAdapter
+     */
+    private $stravaAdapter;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManager $entityManager, StravaAdapter $stravaAdapter)
     {
         $this->entityManager = $entityManager;
         $this->rideRepository = $this->entityManager->getRepository('AppBundle:Ride');
-
+        $this->stravaAdapter = $stravaAdapter;
     }
 
     public function add(Ride $ride) : bool
@@ -39,7 +44,7 @@ class DatabaseRideRepository implements RideRepositoryInterface
 
     public function findAll() : array
     {
-        return $this->rideRepository->findAll();
+        return array_merge($this->rideRepository->findAll(), $this->stravaAdapter->findAllRides());
     }
 
     public function findUpcomingRides() : array

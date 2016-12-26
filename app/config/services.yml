@@ -18,7 +18,7 @@ services:
 
     database_ride_repository:
         class: AppBundle\Repository\DatabaseRideRepository
-        arguments: ["@doctrine.orm.default_entity_manager"]
+        arguments: ["@doctrine.orm.default_entity_manager", "@strava_adapter"]
 
     strava_club_repository:
         class: AppBundle\Repository\StravaClubRepository
@@ -27,6 +27,10 @@ services:
     strava_ride_repository:
         class: AppBundle\Repository\StravaRideRepository
         arguments: ["@doctrine.orm.default_entity_manager"]
+
+    strava_adapter:
+        class: AppBundle\Service\StravaAdapter
+        arguments: ["@strava_ride_repository"]
 
     database_ride_stamp_repository:
         class: AppBundle\Repository\DatabaseRideStampRepository

@@ -93,11 +93,11 @@ class DrafterService
      */
     public function findAllRidesWithDistances(GpsLocation $location = null) : array
     {
-        $rides = $this->rideRepository->findUpcomingRides();
+        $rides = $this->rideRepository->findAll();
         $rideListItems = [];
         /** @var Ride $ride */
         foreach ($rides as $ride) {
-            if (empty($location))
+            if (empty($location) or ($ride->gpsLat == null))
                 $distance = null;
             else
                 $distance = $this->rulerService->getDistance($location, new GpsLocation($ride->gpsLat, $ride->gpsLon));
