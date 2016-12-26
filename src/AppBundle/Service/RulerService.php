@@ -11,6 +11,6 @@ class RulerService
         $dist = sin(deg2rad($location1->getLat())) * sin(deg2rad($location2->getLat())) + cos(deg2rad($location1->getLat())) * cos(deg2rad($location2->getLat())) * cos(deg2rad($theta));
         $dist = acos($dist);
         $dist = rad2deg($dist);
-        return round($dist * 60 * 1.1515);
+        return round($dist * 60 * 1.1515 * 1.609344);
     }
 }
