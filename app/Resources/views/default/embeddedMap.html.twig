@@ -33,7 +33,7 @@
             gpsLat: "{{ ride.gpsLat }}",
             gpsLon: "{{ ride.gpsLon }}",
             message: `{{ include('default/mapRideWindow.html.twig', { 'ride': ride }) }}`,
-            marker: '//drafter.local/images/event_marker.svg'
+            marker: '{{ asset('images/event_marker.svg') }}'
         });
         {% endfor %}
         {% if userLocation %}
@@ -41,7 +41,7 @@
             gpsLat: "{{ userLocation.lat }}",
             gpsLon: "{{ userLocation.lon }}",
             message: "there you are!",
-            marker: '//drafter.local/images/accident_marker.svg'
+            marker: '{{ asset('images/accident_marker.svg') }}'
         });
         {% endif %}
 
