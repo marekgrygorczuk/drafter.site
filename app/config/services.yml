@@ -2,7 +2,7 @@
 services:
     default_controller:
         class: AppBundle\Controller\DefaultController
-        arguments: ["@drafter_service", '@templating', '@form.factory']
+        arguments: ["@drafter_service", '@templating', '@form.factory', "%strava_client_id%"]
 
     strava_controller:
         class: AppBundle\Controller\StravaController
@@ -10,7 +10,7 @@ services:
 
     strava_service:
         class: AppBundle\Service\StravaService
-        arguments: ["@strava_club_repository", "@strava_ride_repository"]
+        arguments: ["@strava_club_repository", "@strava_ride_repository", "@strava_api_client"]
 
     drafter_service:
         class: AppBundle\Service\DrafterService
@@ -27,6 +27,9 @@ services:
     strava_ride_repository:
         class: AppBundle\Repository\StravaRideRepository
         arguments: ["@doctrine.orm.default_entity_manager"]
+    strava_api_client:
+      class: AppBundle\Service\StravaApiClient
+      arguments: ["%strava_client_id%", "%strava_client_secret%"]
 
     strava_adapter:
         class: AppBundle\Service\StravaAdapter

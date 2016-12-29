@@ -27,25 +27,9 @@ class StravaController extends Controller
     /**
      * @return Response
      */
-    public function authorizeAction()
-    {
-        return $this->templating->renderResponse('strava/authorize.html.twig');
-    }
-
-    /**
-     * @return Response
-     */
     public function returnAction()
     {
-        $code = $_REQUEST['code'];
-        $response = $this->stravaService->authorizeToken($code);
-        $response = json_decode($response, true);
-        $access_token = $response['access_token'];
-        foreach ($response['athlete']['clubs'] as $club) {
-            $this->stravaService->saveNewClub($club);
-            $this->stravaService->importClubEvents($club['id'], $access_token);
-//            break;
-        }
+        $this->stravaService->synchronizeUserWithStrava($_REQUEST['code']);
         return $this->templating->renderResponse('strava/return.html.twig');
     }
 }

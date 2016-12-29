@@ -17,35 +17,16 @@ class StravaService
      * @var StravaRideRepository
      */
     private $rideRepository;
+    /**
+     * @var StravaApiClient
+     */
+    private $stravaApiClient;
 
-    public function __construct(StravaClubRepository $repository, StravaRideRepository $rideRepository)
+    public function __construct(StravaClubRepository $repository, StravaRideRepository $rideRepository, StravaApiClient $stravaApiClient)
     {
         $this->clubRepository = $repository;
         $this->rideRepository = $rideRepository;
-    }
-
-    public function authorizeToken($code) : string
-    {
-        $payload = [
-            'client_id' => 15104,
-            'client_secret' => '93aeeb840e85c19a751c1c22ad7ea9b23f7e9b40',
-            'code' => $code
-        ];
-
-        $options = [
-            CURLOPT_URL => 'https://www.strava.com/oauth/token',
-            CURLOPT_HEADER => false,
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => $payload,
-            CURLOPT_RETURNTRANSFER => true
-        ];
-
-        $ch = curl_init();
-        curl_setopt_array($ch, $options);
-        $response = curl_exec($ch);
-        curl_close($ch);
-
-        return $response;
+        $this->stravaApiClient = $stravaApiClient;
     }
 
     public function saveNewClub($clubArray) : bool
@@ -64,16 +45,7 @@ class StravaService
 
     public function importClubEvents($clubId, $access_token) // : void //as of 7.1
     {
-        $options = [
-            CURLOPT_URL => 'https://www.strava.com/api/v3/clubs/' . $clubId . '/group_events',//?upcoming=true',
-            CURLOPT_HTTPHEADER => ["Authorization: Bearer " . $access_token],
-            CURLOPT_RETURNTRANSFER => true,
-        ];
-
-        $ch = curl_init();
-        curl_setopt_array($ch, $options);
-        $response = curl_exec($ch);
-        curl_close($ch);
+        $response = $this->stravaApiClient->fetchClubEvents($clubId, $access_token);
 
         $clubRides = json_decode($response, true);
         if (!empty($clubRides['errors'])) return;
@@ -92,6 +64,17 @@ class StravaService
                 $newClubRide->occurrences[] = new \DateTime($upcoming_occurrence);
             }
             $this->rideRepository->add($newClubRide);
+        }
+    }
+
+    public function synchronizeUserWithStrava($code)
+    {
+        $response = $this->stravaApiClient->authorizeToken($code);
+        $response = json_decode($response, true);
+        $access_token = $response['access_token'];
+        foreach ($response['athlete']['clubs'] as $club) {
+            $this->saveNewClub($club);
+            $this->importClubEvents($club['id'], $access_token);
         }
     }
 }

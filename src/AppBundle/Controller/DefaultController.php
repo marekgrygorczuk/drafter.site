@@ -30,18 +30,24 @@ class DefaultController extends Controller
      * @var FormFactory
      */
     private $formFactory;
+    /**
+     * @var
+     */
+    private $stravaClientId;
 
     /**
      * DefaultController constructor.
      * @param DrafterService $drafterService
      * @param EngineInterface $templating
      * @param FormFactory $formFactory
+     * @param $stravaClientId
      */
-    public function __construct(DrafterService $drafterService, EngineInterface $templating, FormFactory $formFactory)
+    public function __construct(DrafterService $drafterService, EngineInterface $templating, FormFactory $formFactory, $stravaClientId)
     {
         $this->drafterService = $drafterService;
         $this->templating = $templating;
         $this->formFactory = $formFactory;
+        $this->stravaClientId = $stravaClientId;
     }
 
     /**
@@ -61,9 +67,7 @@ class DefaultController extends Controller
             $userGpsLocation = null;
             $rideListItems = $this->drafterService->findAllRidesWithDistances($userGpsLocation);
         }
-//        $rideListItems = $this->drafterService->findAllRidesWithDistances($userGpsLocation);
-        /** @var RideListItem[] $ridesWithDistances */
-        return $this->templating->renderResponse('default/index.html.twig', ['rides' => $rideListItems, 'userLocation' => $userGpsLocation]);
+        return $this->templating->renderResponse('default/index.html.twig', ['rides' => $rideListItems, 'userLocation' => $userGpsLocation, 'clientId' => $this->stravaClientId]);
     }
 
     /**

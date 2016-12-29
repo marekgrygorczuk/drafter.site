@@ -25,3 +25,7 @@ doctrine:
         password: "%database_password%"
         path:     "%test_database_path%"
         charset:  UTF8
+parameters:
+    strava_client_id: 15357
+    strava_client_secret: d216f9dc50751b91dad9d2efb6c143aff38943dd
+    strava_access_token: b8d5988befbf98dedbc52bf4a575fca70222e9e4

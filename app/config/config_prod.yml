@@ -19,3 +19,7 @@ monolog:
             level: debug
         console:
             type:  console
+parameters:
+    strava_client_id: 15104
+    strava_client_secret: 93aeeb840e85c19a751c1c22ad7ea9b23f7e9b40
+    strava_access_token: 5926714f46a0c616c0399b24b525774d2415bdd3
