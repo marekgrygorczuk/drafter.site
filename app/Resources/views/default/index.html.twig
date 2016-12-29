@@ -40,10 +40,12 @@
         <div class="clearfix"></div>
         <h2 style="color: black; text-align: center">Haven't find one?</h2>
         <div class="col-xs-12 col-sm-6">
-            <a href="https://www.strava.com/oauth/authorize?client_id=15104&amp;response_type=code&amp;redirect_uri=http://drafter.local/app_dev.php/strava/return&amp;approval_prompt=force" class="btn btn-info btn-block" style="background-color: #fc4c02; border: 1px solid #fc4c02; margin: 10px 0;">Connect with STRAVA</a>
+            <a href="https://www.strava.com/oauth/authorize?client_id=15104&amp;response_type=code&amp;redirect_uri={{ absolute_url(path('returnStrava')) }}&amp;approval_prompt=force"
+               class="btn btn-info btn-block"
+               style="background-color: #fc4c02; border: 1px solid #fc4c02; margin: 10px 0;">Connect with STRAVA</a>
         </div>
         {#<div class="col-xs-12 col-sm-6">#}
-            {#<a href="{{ path('addRide') }}" class="btn btn-info btn-block" role="button" style="margin: 10px 0;">Add new ride</a>#}
+        {#<a href="{{ path('addRide') }}" class="btn btn-info btn-block" role="button" style="margin: 10px 0;">Add new ride</a>#}
         {#</div>#}
     </div>
 {% endblock %}
