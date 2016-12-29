@@ -84,7 +84,7 @@ class FilterServiceTest extends \PHPUnit_Framework_TestCase
             $this->assertLessThanOrEqual(25, $filteredRide->distance);
         }
     }
-    public function testServiceWillFilterOutTooNewRides()
+    public function testServiceWillFilterOutTooEarlyRides()
     {
         $rideItem1 = new RideListItem();
         $rideItem1->beginning = new DateTime('2017-01-03 14:00:00');
@@ -99,7 +99,7 @@ class FilterServiceTest extends \PHPUnit_Framework_TestCase
         $rideItems = [$rideItem1, $rideItem2, $rideItem3, $rideItem4, $rideItem5];
 
         $filters = new RideFilters();
-        $filters->afterDate = new DateTime('2017-01-04 14:00:00');
+        $filters->earliestDate = new DateTime('2017-01-04 14:00:00');
 
         $filteredRides = $this->filterService->filterRideItems($rideItems, $filters);
         $this->assertEquals(4, count($filteredRides));
@@ -108,7 +108,7 @@ class FilterServiceTest extends \PHPUnit_Framework_TestCase
             $this->assertGreaterThanOrEqual(new DateTime('2017-01-04 14:00:00'), $filteredRide->beginning);
         }
     }
-    public function testServiceWillFilterOutTooOldRides()
+    public function testServiceWillFilterOutTooLateRides()
     {
         $rideItem1 = new RideListItem();
         $rideItem1->beginning = new DateTime('2017-01-03 14:00:00');
@@ -123,7 +123,7 @@ class FilterServiceTest extends \PHPUnit_Framework_TestCase
         $rideItems = [$rideItem1, $rideItem2, $rideItem3, $rideItem4, $rideItem5];
 
         $filters = new RideFilters();
-        $filters->beforeDate = new DateTime('2017-01-04 14:00:00');
+        $filters->latestDate = new DateTime('2017-01-04 14:00:00');
 
         $filteredRides = $this->filterService->filterRideItems($rideItems, $filters);
         $this->assertEquals(2, count($filteredRides));

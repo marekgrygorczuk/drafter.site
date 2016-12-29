@@ -26,12 +26,12 @@ class FilterService {
                 if ($rideItem->distance > $filters->maxRideDistance)
                     continue;
             }
-            if (!empty($filters->afterDate)) {
-                if ($rideItem->beginning < $filters->afterDate)
+            if (!empty($filters->latestDate)) {
+                if ($rideItem->beginning > $filters->latestDate)
                     continue;
             }
-            if (!empty($filters->beforeDate)) {
-                if ($rideItem->beginning > $filters->beforeDate)
+            if (!empty($filters->earliestDate)) {
+                if ($rideItem->beginning < $filters->earliestDate)
                     continue;
             }
 

@@ -61,7 +61,7 @@ class DefaultController extends Controller
             $userGpsLocation = new GpsLocation($cookies->get('drafter_lat'), $cookies->get('drafter_lon'));
             $filters = new RideFilters();
             $filters->maxDistanceFromUser = 1000;
-            $filters->beforeDate = new \DateTime();
+            $filters->earliestDate = new \DateTime();
             $rideListItems = $this->drafterService->findFilteredRideItems($filters, $userGpsLocation);
 
         } else {
