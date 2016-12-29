@@ -12,6 +12,7 @@ namespace tests\AppBundle\Service;
 use AppBundle\Dto\RideFilters;
 use AppBundle\Dto\RideListItem;
 use AppBundle\Service\FilterService;
+use \DateTime;
 
 class FilterServiceTest extends \PHPUnit_Framework_TestCase
 {
@@ -81,6 +82,54 @@ class FilterServiceTest extends \PHPUnit_Framework_TestCase
         /** @var RideListItem $filteredRide */
         foreach ($filteredRides as $filteredRide) {
             $this->assertLessThanOrEqual(25, $filteredRide->distance);
+        }
+    }
+    public function testServiceWillFilterOutTooNewRides()
+    {
+        $rideItem1 = new RideListItem();
+        $rideItem1->beginning = new DateTime('2017-01-03 14:00:00');
+        $rideItem2 = new RideListItem();
+        $rideItem2->beginning = new DateTime('2017-01-04 14:00:00');
+        $rideItem3 = new RideListItem();
+        $rideItem3->beginning = new DateTime('2017-01-05 14:00:00');
+        $rideItem4 = new RideListItem();
+        $rideItem4->beginning = new DateTime('2017-01-06 14:00:00');
+        $rideItem5 = new RideListItem();
+        $rideItem5->beginning = new DateTime('2017-01-07 14:00:00');
+        $rideItems = [$rideItem1, $rideItem2, $rideItem3, $rideItem4, $rideItem5];
+
+        $filters = new RideFilters();
+        $filters->afterDate = new DateTime('2017-01-04 14:00:00');
+
+        $filteredRides = $this->filterService->filterRideItems($rideItems, $filters);
+        $this->assertEquals(4, count($filteredRides));
+        /** @var RideListItem $filteredRide */
+        foreach ($filteredRides as $filteredRide) {
+            $this->assertGreaterThanOrEqual(new DateTime('2017-01-04 14:00:00'), $filteredRide->beginning);
+        }
+    }
+    public function testServiceWillFilterOutTooOldRides()
+    {
+        $rideItem1 = new RideListItem();
+        $rideItem1->beginning = new DateTime('2017-01-03 14:00:00');
+        $rideItem2 = new RideListItem();
+        $rideItem2->beginning = new DateTime('2017-01-04 14:00:00');
+        $rideItem3 = new RideListItem();
+        $rideItem3->beginning = new DateTime('2017-01-05 14:00:00');
+        $rideItem4 = new RideListItem();
+        $rideItem4->beginning = new DateTime('2017-01-06 14:00:00');
+        $rideItem5 = new RideListItem();
+        $rideItem5->beginning = new DateTime('2017-01-07 14:00:00');
+        $rideItems = [$rideItem1, $rideItem2, $rideItem3, $rideItem4, $rideItem5];
+
+        $filters = new RideFilters();
+        $filters->beforeDate = new DateTime('2017-01-04 14:00:00');
+
+        $filteredRides = $this->filterService->filterRideItems($rideItems, $filters);
+        $this->assertEquals(2, count($filteredRides));
+        /** @var RideListItem $filteredRide */
+        foreach ($filteredRides as $filteredRide) {
+            $this->assertLessThanOrEqual(new DateTime('2017-01-04 14:00:00'), $filteredRide->beginning);
         }
     }
 }
