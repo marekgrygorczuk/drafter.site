@@ -72,6 +72,7 @@ class StravaService
         $response = $this->stravaApiClient->authorizeToken($code);
         $response = json_decode($response, true);
         $access_token = $response['access_token'];
+        var_dump($access_token);
         foreach ($response['athlete']['clubs'] as $club) {
             $this->saveNewClub($club);
             $this->importClubEvents($club['id'], $access_token);

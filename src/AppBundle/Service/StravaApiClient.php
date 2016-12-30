@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mocniak
- * Date: 11.12.16
- * Time: 17:15
- */
 
 namespace AppBundle\Service;
 
@@ -49,6 +43,22 @@ class StravaApiClient
         $options = [
             CURLOPT_URL => 'https://www.strava.com/api/v3/clubs/' . $clubId . '/group_events',//?upcoming=true',
             CURLOPT_HTTPHEADER => ["Authorization: Bearer " . $access_token],
+            CURLOPT_RETURNTRANSFER => true,
+        ];
+
+        $ch = curl_init();
+        curl_setopt_array($ch, $options);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        return $response;
+    }
+
+    public function fetchRoute($routeId, $accessToken)
+    {
+        $options = [
+            CURLOPT_URL => 'https://www.strava.com/api/v3/routes/' . $routeId,
+            CURLOPT_HTTPHEADER => ["Authorization: Bearer " . $accessToken],
             CURLOPT_RETURNTRANSFER => true,
         ];
 
