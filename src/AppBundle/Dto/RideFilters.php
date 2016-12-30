@@ -23,6 +23,14 @@ class RideFilters
      * @var int
      */
     public $maxRideDistance;
+    /** 
+     * @var \DateTime
+     */
+    public $beforeDate;
+    /** 
+     * @var \DateTime
+     */
+    public $afterDate;
     /**
      * @var array
      */
