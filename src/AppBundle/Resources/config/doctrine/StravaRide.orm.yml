@@ -27,3 +27,6 @@ AppBundle\Entity\StravaRide:
       length: 100
     occurrences:
       type: array
+    gpsLocation:
+      type: gpslocation
+      nullable: true

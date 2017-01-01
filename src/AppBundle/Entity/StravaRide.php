@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 
+use AppBundle\Service\GpsLocation;
+
 class StravaRide
 {
     public $id;
@@ -17,4 +19,6 @@ class StravaRide
     public $address;
     /** @var  \DateTime[] */
     public $occurrences;
+    /** @var  GpsLocation */
+    public $gpsLocation;
 }

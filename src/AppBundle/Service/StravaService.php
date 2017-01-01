@@ -21,12 +21,17 @@ class StravaService
      * @var StravaApiClient
      */
     private $stravaApiClient;
+    /**
+     * @var StravaJsonMapper
+     */
+    private $stravaMapper;
 
-    public function __construct(StravaClubRepository $repository, StravaRideRepository $rideRepository, StravaApiClient $stravaApiClient)
+    public function __construct(StravaClubRepository $repository, StravaRideRepository $rideRepository, StravaApiClient $stravaApiClient, StravaJsonMapper $stravaJsonMapper)
     {
         $this->clubRepository = $repository;
         $this->rideRepository = $rideRepository;
         $this->stravaApiClient = $stravaApiClient;
+        $this->stravaMapper = $stravaJsonMapper;
     }
 
     public function saveNewClub($clubArray) : bool
@@ -45,25 +50,18 @@ class StravaService
 
     public function importClubEvents($clubId, $access_token) // : void //as of 7.1
     {
-        $response = $this->stravaApiClient->fetchClubEvents($clubId, $access_token);
+        $clubJson = $this->stravaApiClient->fetchClubEvents($clubId, $access_token);
 
-        $clubRides = json_decode($response, true);
+        $clubRides = json_decode($clubJson, true);
         if (!empty($clubRides['errors'])) return;
         foreach ($clubRides as $clubRide) {
-            $newClubRide = new StravaRide();
-            $newClubRide->id = $clubRide['id'];
-            $newClubRide->title = $clubRide['title'];
-            $newClubRide->description = $clubRide['description'];
-            $newClubRide->club_id = $clubRide['club_id'];
-            $newClubRide->activity_type = $clubRide['activity_type'];
-            $newClubRide->route_id = $clubRide['route_id'];
-            $newClubRide->address = $clubRide['address'];
-            $newClubRide->private = $clubRide['private'];
-            $newClubRide->occurrences = [];
-            foreach ($clubRide["upcoming_occurrences"] as $upcoming_occurrence) {
-                $newClubRide->occurrences[] = new \DateTime($upcoming_occurrence);
+            $stravaRide = $this->stravaMapper->stravaRideFromJson($clubRide);
+            if (!empty($stravaRide->route_id)) {
+                $routeStreamJson = $this->stravaApiClient->fetchRouteStream($stravaRide->route_id, $access_token);
+                $routeStreamArray = json_decode($routeStreamJson, true);
+                $stravaRide->gpsLocation = $this->stravaMapper->beginningOfRouteStream($routeStreamArray);
             }
-            $this->rideRepository->add($newClubRide);
+            $this->rideRepository->add($stravaRide);
         }
     }
 
@@ -72,7 +70,6 @@ class StravaService
         $response = $this->stravaApiClient->authorizeToken($code);
         $response = json_decode($response, true);
         $access_token = $response['access_token'];
-        var_dump($access_token);
         foreach ($response['athlete']['clubs'] as $club) {
             $this->saveNewClub($club);
             $this->importClubEvents($club['id'], $access_token);

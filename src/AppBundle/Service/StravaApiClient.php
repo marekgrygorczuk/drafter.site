@@ -69,5 +69,20 @@ class StravaApiClient
 
         return $response;
     }
+    public function fetchRouteStream($routeId, $accessToken)
+    {
+        $options = [
+            CURLOPT_URL => 'https://www.strava.com/api/v3/routes/' . $routeId . '/streams',
+            CURLOPT_HTTPHEADER => ["Authorization: Bearer " . $accessToken],
+            CURLOPT_RETURNTRANSFER => true,
+        ];
+
+        $ch = curl_init();
+        curl_setopt_array($ch, $options);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        return $response;
+    }
 
 }
