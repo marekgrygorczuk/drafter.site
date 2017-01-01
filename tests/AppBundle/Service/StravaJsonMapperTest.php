@@ -14,9 +14,13 @@ use AppBundle\Service\StravaJsonMapper;
 
 class StravaJsonMapperTest extends \PHPUnit_Framework_TestCase
 {
-    public function testReturnsBeginningOfStravaRouteStreamArray()
+    /** @var StravaJsonMapper $jsonMapper */
+    private $jsonMapper;
+    private $testRouteStream;
+
+    public function setUp()
     {
-        $testRouteStream = json_decode('[
+        $this->testRouteStream = json_decode('[
     {
         "type": "latlng",
         "data": [
@@ -49,7 +53,8 @@ class StravaJsonMapperTest extends \PHPUnit_Framework_TestCase
             87.62594726646202,
             184.14500191072992,
             280.6640565546932,
-            377.18313017006324
+            377.18313017006324,
+            32370.98213305391
         ]
     },
     {
@@ -64,10 +69,21 @@ class StravaJsonMapperTest extends \PHPUnit_Framework_TestCase
     }
 ]
 ', true);
-        $jsonMapper = new StravaJsonMapper();
-        $gpsLocation = $jsonMapper->beginningOfRouteStream($testRouteStream);
+        $this->jsonMapper = new StravaJsonMapper();
+
+    }
+
+    public function testReturnsBeginningOfStravaRouteStreamArray()
+    {
+        $gpsLocation = $this->jsonMapper->beginningOfRouteStream($this->testRouteStream);
         $expectedGpsLocation = new GpsLocation(52.220510000000004, 21.01835);
-        $this->assertEquals($expectedGpsLocation->getLat(),$gpsLocation->getLat());
-        $this->assertEquals($expectedGpsLocation->getLon(),$gpsLocation->getLon());
+        $this->assertEquals($expectedGpsLocation->getLat(), $gpsLocation->getLat());
+        $this->assertEquals($expectedGpsLocation->getLon(), $gpsLocation->getLon());
+    }
+
+    public function testReturnsDistanceOfStravaRouteArray()
+    {
+        $distance = $this->jsonMapper->distanceOfRouteStream($this->testRouteStream);
+        $this->assertEquals(32,$distance);
     }
 }

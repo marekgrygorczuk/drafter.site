@@ -38,5 +38,14 @@ class StravaJsonMapper
                 return new GpsLocation($lat, $lng);
             }
         }
+        return null;
+    }
+    public function distanceOfRouteStream(array $routeStreamArray) : int {
+        foreach ($routeStreamArray as $element) {
+            if ($element["type"] == "distance") {
+                return round((int)$element["data"][count($element["data"])-1]/1000);
+            }
+        }
+        return null;
     }
 }
