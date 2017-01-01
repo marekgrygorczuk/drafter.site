@@ -51,4 +51,12 @@ class RideListItem
      */
     public $distanceToUser;
 
+    public static function beginningCompare(RideListItem $a, RideListItem $b)
+    {
+        if ($a->beginning == $b->beginning) {
+            return 0;
+        }
+        return ($a->beginning < $b->beginning) ? -1 : 1;
+    }
+
 }

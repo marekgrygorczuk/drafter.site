@@ -84,6 +84,7 @@ class DrafterService
         /** @var RideListItem[] $rides */
         $rides = $this->findAllRidesWithDistances($location);
         $filteredRides = $this->filterService->filterRideItems($rides, $rideFilters);
+        usort($filteredRides, 'AppBundle\Dto\RideListItem::beginningCompare');
 
         return $filteredRides;
     }
