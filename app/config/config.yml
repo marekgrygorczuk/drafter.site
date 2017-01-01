@@ -50,6 +50,8 @@ doctrine:
         charset:  UTF8
         types:
             gpslocation: AppBundle\Type\GpsLocationType
+        mapping_types:
+            gpslocation: string
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"

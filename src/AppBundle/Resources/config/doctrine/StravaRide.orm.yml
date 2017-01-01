@@ -30,3 +30,6 @@ AppBundle\Entity\StravaRide:
     gpsLocation:
       type: gpslocation
       nullable: true
+    distance:
+      type: integer
+      nullable: true

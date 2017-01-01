@@ -21,4 +21,5 @@ class StravaRide
     public $occurrences;
     /** @var  GpsLocation */
     public $gpsLocation;
+    public $distance;
 }

@@ -60,6 +60,7 @@ class StravaService
                 $routeStreamJson = $this->stravaApiClient->fetchRouteStream($stravaRide->route_id, $access_token);
                 $routeStreamArray = json_decode($routeStreamJson, true);
                 $stravaRide->gpsLocation = $this->stravaMapper->beginningOfRouteStream($routeStreamArray);
+                $stravaRide->distance = $this->stravaMapper->distanceOfRouteStream($routeStreamArray);
             }
             $this->rideRepository->add($stravaRide);
         }

@@ -29,6 +29,7 @@ class StravaAdapter
             $drafterRide->gpsLat = $stravaRide->gpsLocation->getLat();
             $drafterRide->gpsLon = $stravaRide->gpsLocation->getLon();
             $drafterRide->beginning = $occurrence;
+            $drafterRide->distance = $stravaRide->distance;
             $drafterRides[] = $drafterRide;
         }
         return $drafterRides;
