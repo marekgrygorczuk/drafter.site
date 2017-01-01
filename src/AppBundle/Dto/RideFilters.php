@@ -26,11 +26,11 @@ class RideFilters
     /** 
      * @var \DateTime
      */
-    public $beforeDate;
+    public $earliestDate;
     /** 
      * @var \DateTime
      */
-    public $afterDate;
+    public $latestDate;
     /**
      * @var array
      */

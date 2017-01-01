@@ -57,16 +57,16 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $cookies = $request->cookies;
+        $filters = new RideFilters();
         if ($cookies->has('drafter_lat')) {
             $userGpsLocation = new GpsLocation($cookies->get('drafter_lat'), $cookies->get('drafter_lon'));
-            $filters = new RideFilters();
-            $filters->maxDistanceFromUser = 1000;
+            $filters->maxDistanceFromUser = 100;
+            $filters->latestDate = new \DateTime("+10 days");
             $filters->earliestDate = new \DateTime();
             $rideListItems = $this->drafterService->findFilteredRideItems($filters, $userGpsLocation);
-
         } else {
             $userGpsLocation = null;
-            $rideListItems = $this->drafterService->findAllRidesWithDistances($userGpsLocation);
+            $rideListItems = [];
         }
         return $this->templating->renderResponse('default/index.html.twig', ['rides' => $rideListItems, 'userLocation' => $userGpsLocation, 'clientId' => $this->stravaClientId]);
     }
