@@ -26,8 +26,8 @@ class StravaAdapter
             $drafterRide = new Ride();
             $drafterRide->name = $stravaRide->title;
             $drafterRide->locationDescription = $stravaRide->address;
-            $drafterRide->gpsLat = $stravaRide->gpsLocation->getLat();
-            $drafterRide->gpsLon = $stravaRide->gpsLocation->getLon();
+            $drafterRide->gpsLat = empty($stravaRide->gpsLocation) ? null : $stravaRide->gpsLocation->getLat();
+            $drafterRide->gpsLon = empty($stravaRide->gpsLocation) ? null : $stravaRide->gpsLocation->getLon();
             $drafterRide->beginning = $occurrence;
             $drafterRide->distance = $stravaRide->distance;
             $drafterRides[] = $drafterRide;
