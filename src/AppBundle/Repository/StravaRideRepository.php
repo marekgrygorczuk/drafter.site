@@ -2,7 +2,6 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\StravaClub;
 use AppBundle\Entity\StravaRide;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -56,5 +55,10 @@ class StravaRideRepository
         $this->entityManager->createQuery('DELETE FROM AppBundle:StravaRide')->execute();
         $this->entityManager->flush();
         return true;
+    }
+
+    public function find($array)
+    {
+        return $this->stravaRideRepository->findBy($array);
     }
 }

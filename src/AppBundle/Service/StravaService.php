@@ -56,6 +56,7 @@ class StravaService
         if (!empty($clubRides['errors'])) return;
         foreach ($clubRides as $clubRide) {
             $stravaRide = $this->stravaMapper->stravaRideFromJson($clubRide);
+            if (!empty($this->rideRepository->find(['id' => $stravaRide->club_id]))) continue;
             if (!empty($stravaRide->route_id)) {
                 $routeStreamJson = $this->stravaApiClient->fetchRouteStream($stravaRide->route_id, $access_token);
                 $routeStreamArray = json_decode($routeStreamJson, true);
