@@ -1,37 +1,19 @@
 <?php
 namespace AppBundle\Entity;
 
-class User
+use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\ORM\Mapping as ORM;
+
+class User extends BaseUser
 {
     /**
      * @var int
      */
-    private $id;
+    protected $id;
 
     public function __construct()
     {
+        parent::__construct();
         $this->id = mt_rand();
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set id
-     *
-     * @param integer $id
-     *
-     * @return User
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
     }
 }

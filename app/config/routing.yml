@@ -19,3 +19,5 @@ returnStrava:
     path:     /strava/return
     defaults: { _controller: strava_controller:returnAction }
 
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
