@@ -60,9 +60,10 @@ class DefaultController extends Controller
         $filters = new RideFilters();
         if ($cookies->has('drafter_lat')) {
             $userGpsLocation = new GpsLocation($cookies->get('drafter_lat'), $cookies->get('drafter_lon'));
-            $filters->maxDistanceFromUser = 500;
-            $filters->latestDate = new \DateTime("+10 days");
+            $filters->maxDistanceFromUser = 100;
+            $filters->latestDate = new \DateTime("+7 days");
             $filters->earliestDate = new \DateTime();
+            $filters->hasLocation = true;
             $rideListItems = $this->drafterService->findFilteredRideItems($filters, $userGpsLocation);
         } else {
             $userGpsLocation = null;

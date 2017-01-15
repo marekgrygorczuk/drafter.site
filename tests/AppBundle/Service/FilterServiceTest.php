@@ -132,4 +132,26 @@ class FilterServiceTest extends \PHPUnit_Framework_TestCase
             $this->assertLessThanOrEqual(new DateTime('2017-01-04 14:00:00'), $filteredRide->beginning);
         }
     }
+    public function testServiceWillFilterOutRidesWithouLocation() {
+        $rideItem = new RideListItem();
+        $rideItem->gpsLat = null;
+        $rideItem->gpsLon = null;
+        $rideItem2 = new RideListItem();
+        $rideItem2->gpsLat = 20;
+        $rideItem2->gpsLon = 10;
+
+        $rideItems = [$rideItem, $rideItem2];
+
+        $filters = new RideFilters();
+        $filters->hasLocation = true;
+
+        $filteredRides = $this->filterService->filterRideItems($rideItems, $filters);
+        $this->assertEquals(1, count($filteredRides));
+        /** @var RideListItem $filteredRide */
+        foreach ($filteredRides as $filteredRide) {
+            $this->assertNotNull($filteredRide->gpsLat);
+            $this->assertNotNull($filteredRide->gpsLon);
+        }
+
+    }
 }

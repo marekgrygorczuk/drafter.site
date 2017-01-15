@@ -34,6 +34,12 @@ class FilterService {
                 if ($rideItem->beginning < $filters->earliestDate)
                     continue;
             }
+            if ($filters->hasLocation) {
+                if (empty($rideItem->gpsLat))
+                    continue;
+                if (empty($rideItem->gpsLon))
+                    continue;
+            }
 
             $filteredRides[] = $rideItem;
         }

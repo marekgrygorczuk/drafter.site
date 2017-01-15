@@ -43,4 +43,8 @@ class RideFilters
      * @var int
      */
     public $minutes;
+    /**
+     * @var bool
+     */
+    public $hasLocation;
 }
