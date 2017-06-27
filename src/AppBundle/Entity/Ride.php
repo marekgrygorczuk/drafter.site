@@ -2,6 +2,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Dto\NewRideDto;
+use AppBundle\Service\GpsLocation;
 
 class Ride
 {
@@ -25,13 +26,9 @@ class Ride
      */
     public $locationDescription;
     /**
-     * @var float
+     * @var GpsLocation
      */
-    public $gpsLon;
-    /**
-     * @var float
-     */
-    public $gpsLat;
+    public $gpsLocation;
     /**
      * @var \DateTime
      */
@@ -48,15 +45,10 @@ class Ride
     public $gear;
 
 
-//    /**
-//     * @var User
-//     */
-//    public $owner;
-
-    public function __construct($location = null, \DateTime $beginning = null, $name = null)
+    public function __construct($locationDescription = null, \DateTime $beginning = null, $name = null)
     {
         $this->id = mt_rand();
-        $this->locationDescription = $location;
+        $this->locationDescription = $locationDescription;
         $this->beginning = $beginning;
         $this->name = $name;
     }
@@ -65,13 +57,12 @@ class Ride
      * @param NewRideDto $dto
      * @return Ride
      */
-    public static function newRideFromDto(NewRideDto $dto) : Ride
+    public static function newRideFromDto(NewRideDto $dto): Ride
     {
         $ride = new Ride();
         $ride->name = $dto->name;
         $ride->locationDescription = $dto->locationDescription;
-        $ride->gpsLon = $dto->gpsLon;
-        $ride->gpsLat = $dto->gpsLat;
+        $ride->gpsLocation = new GpsLocation($dto->gpsLat, $dto->gpsLon);
         $ride->distance = $dto->distance;
         $ride->gear = $dto->gear;
         $ride->beginning = $dto->beginning;
@@ -156,27 +147,4 @@ class Ride
         return $this->name;
     }
 
-//    /**
-//     * Set owner
-//     *
-//     * @param \AppBundle\Entity\User $owner
-//     *
-//     * @return Ride
-//     */
-//    public function setOwner(\AppBundle\Entity\User $owner = null)
-//    {
-//        $this->owner = $owner;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Get owner
-//     *
-//     * @return \AppBundle\Entity\User
-//     */
-//    public function getOwner()
-//    {
-//        return $this->owner;
-//    }
 }

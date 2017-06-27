@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 
+use AppBundle\Service\GpsLocation;
+
 class RideStamp
 {
     // day of week as in ISO-8601
@@ -115,8 +117,7 @@ class RideStamp
         $ride = new Ride();
         $ride->name = $this->name;
         $ride->locationDescription = $this->locationDescription;
-        $ride->gpsLon = $this->gpsLon;
-        $ride->gpsLat = $this->gpsLat;
+        $ride->gpsLocation = new GpsLocation($this->gpsLat,$this->gpsLon);
         $ride->distance = $this->distance;
         $ride->gear = $this->gear;
 

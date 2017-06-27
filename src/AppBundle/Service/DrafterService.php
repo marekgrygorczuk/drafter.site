@@ -62,7 +62,7 @@ class DrafterService
      */
     public function addRide(NewRideDto $newRideDto) : bool
     {
-        $ride = new Ride($newRideDto->rideLocation, $newRideDto->rideBeginning, $newRideDto->name);
+        $ride = Ride::newRideFromDto($newRideDto);
         if (!$this->rideRepository->add($ride)) {
             return false;
         }
@@ -99,16 +99,16 @@ class DrafterService
         $rideListItems = [];
         /** @var Ride $ride */
         foreach ($rides as $ride) {
-            if (empty($location) or ($ride->gpsLat == null))
+            if (empty($location) or ($ride->gpsLocation == null))
                 $distance = null;
             else
-                $distance = $this->rulerService->getDistance($location, new GpsLocation($ride->gpsLat, $ride->gpsLon));
+                $distance = $this->rulerService->getDistance($location, $ride->gpsLocation);
             $rideListItem = new RideListItem();
             $rideListItem->id = $ride->id;
             $rideListItem->name = $ride->name;
             $rideListItem->locationDescription = $ride->locationDescription;
-            $rideListItem->gpsLon = $ride->gpsLon;
-            $rideListItem->gpsLat = $ride->gpsLat;
+            $rideListItem->gpsLon = $ride->gpsLocation->getLon();
+            $rideListItem->gpsLat = $ride->gpsLocation->getLat();
             $rideListItem->beginning = $ride->beginning;
             $rideListItem->distance = $ride->distance;
             $rideListItem->gear = $ride->gear;

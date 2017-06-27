@@ -12,11 +12,11 @@ use Doctrine\DBAL\Types\Type;
  */
 class GpsLocationType extends Type
 {
-    const GPSLOCATION = 'gpslocation'; // modify to match your type name
+    const GPSLOCATION = 'gpslocation';
 
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
-        return 'GpsLocation';
+        return 'string';
     }
 
     public function convertToPHPValue($value, AbstractPlatform $platform)

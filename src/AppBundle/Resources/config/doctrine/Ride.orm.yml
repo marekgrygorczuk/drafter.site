@@ -12,10 +12,10 @@ AppBundle\Entity\Ride:
     locationDescription:
       type: string
       length: 100
-    gpsLon:
-      type: float
-    gpsLat:
-      type: float
+      nullable: true
+    gpsLocation:
+      type: gpslocation
+      nullable: true
     beginning:
       type: datetime
     distance:
